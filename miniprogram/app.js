@@ -28,29 +28,32 @@ App({
 
   /**
    * 自动登录检测
-   * 先检查本地存储，再通过云函数验证会话
+   * 本地存储有用户数据 → 去数据库验证该用户名仍存在 → 恢复登录态
    */
   async checkAutoLogin() {
     const storedUser = wx.getStorageSync('user');
 
-    if (storedUser && storedUser._id) {
-      // 有本地用户数据，验证会话是否仍然有效
+    if (storedUser && storedUser._id && storedUser.username) {
       try {
-        const res = await wx.cloud.callFunction({
-          name: 'userAuth',
-          data: { action: 'checkSession' }
-        });
+        const db = wx.cloud.database();
+        const result = await db.collection('users')
+          .where({ username: storedUser.username })
+          .get();
 
-        if (res.result && res.result.ok) {
-          this.globalData.user = res.result.user;
-          // 更新本地存储
-          wx.setStorageSync('user', res.result.user);
-          console.log('[铁记] 自动登录成功:', res.result.user.username);
+        if (result.data.length > 0) {
+          const record = result.data[0];
+          this.globalData.user = {
+            _id: record._id,
+            username: record.username,
+            avatar_url: record.avatar_url || '',
+            created_at: record.created_at
+          };
+          wx.setStorageSync('user', this.globalData.user);
+          console.log('[铁记] 自动登录成功:', record.username);
         } else {
-          // 会话失效，清除本地数据
           wx.removeStorageSync('user');
           this.globalData.user = null;
-          console.log('[铁记] 会话已失效');
+          console.log('[铁记] 用户数据不存在，需重新登录');
         }
       } catch (err) {
         console.error('[铁记] 自动登录检查失败:', err);

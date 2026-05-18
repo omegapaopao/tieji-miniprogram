@@ -84,7 +84,7 @@ Page({
   /**
    * 更换头像
    */
-  changeAvatar() {
+  async changeAvatar() {
     if (!this.data.user) return;
 
     wx.chooseMedia({
@@ -103,27 +103,23 @@ Page({
             filePath: tempPath
           });
 
-          // 更新数据库
-          const callRes = await wx.cloud.callFunction({
-            name: 'userAuth',
+          // 直接更新数据库
+          const db = app.getDb();
+          await db.collection('users').doc(this.data.user._id).update({
             data: {
-              action: 'updateAvatar',
-              avatarUrl: uploadRes.fileID
+              avatar_url: uploadRes.fileID,
+              updated_at: Date.now()
             }
           });
 
-          if (callRes.result && callRes.result.ok) {
-            // 更新本地
-            const user = this.data.user;
-            user.avatar_url = uploadRes.fileID;
-            wx.setStorageSync('user', user);
-            app.globalData.user = user;
+          // 更新本地
+          const user = this.data.user;
+          user.avatar_url = uploadRes.fileID;
+          wx.setStorageSync('user', user);
+          app.globalData.user = user;
 
-            this.setData({ avatarUrl: tempPath });
-            wx.showToast({ title: '头像已更新', icon: 'success' });
-          } else {
-            wx.showToast({ title: '更新失败', icon: 'none' });
-          }
+          this.setData({ avatarUrl: tempPath });
+          wx.showToast({ title: '头像已更新', icon: 'success' });
         } catch (err) {
           console.error('[我的] 头像更新失败:', err);
           wx.showToast({ title: '更新失败', icon: 'none' });
