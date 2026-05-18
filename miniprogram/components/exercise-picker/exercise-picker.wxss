@@ -1,0 +1,107 @@
+/**
+ * 动作选择器 — 样式（含动画增强）
+ */
+.exercise-picker {
+  padding: 0 0 10rpx 0;
+}
+
+/* 分类标签 */
+.category-scroll {
+  white-space: nowrap;
+  margin-bottom: 20rpx;
+}
+
+.category-tag {
+  display: inline-block;
+  background: #2a2a2a;
+  color: #999;
+  font-size: 26rpx;
+  padding: 10rpx 24rpx;
+  border-radius: 20rpx;
+  margin-right: 12rpx;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.category-tag.active {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+  font-weight: 600;
+  transform: scale(1.05);
+}
+
+.category-tag-hover {
+  background: #3a3a3a;
+}
+
+/* 动作列表 */
+.exercise-scroll {
+  white-space: nowrap;
+}
+
+.exercise-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: #2a2a2a;
+  border-radius: 16rpx;
+  padding: 24rpx 28rpx;
+  margin-right: 16rpx;
+  min-width: 140rpx;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 2rpx solid transparent;
+}
+
+.exercise-item-hover {
+  border-color: #f5a623;
+  background: #333;
+  transform: translateY(-4rpx);
+  box-shadow: 0 8rpx 20rpx rgba(0, 0, 0, 0.4);
+}
+
+.exercise-item.add-new {
+  border: 2rpx dashed #444;
+  background: transparent;
+  justify-content: center;
+  min-height: 120rpx;
+  transition: all 0.25s ease;
+}
+
+.add-new-hover {
+  border-color: #f5a623 !important;
+  background: rgba(245, 166, 35, 0.06) !important;
+}
+
+.exercise-icon {
+  font-size: 40rpx;
+  margin-bottom: 8rpx;
+  transition: transform 0.2s ease;
+}
+
+.exercise-item-hover .exercise-icon {
+  transform: scale(1.15);
+}
+
+.add-icon {
+  font-size: 44rpx;
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.add-new-hover .add-icon {
+  color: #f5a623;
+  transform: rotate(90deg);
+}
+
+.exercise-name {
+  font-size: 26rpx;
+  color: #fff;
+  margin-bottom: 4rpx;
+  max-width: 120rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exercise-category {
+  font-size: 20rpx;
+  color: #666;
+}

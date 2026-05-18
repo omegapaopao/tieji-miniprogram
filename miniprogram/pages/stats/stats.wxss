@@ -1,0 +1,166 @@
+/**
+ * 统计页 — 样式（含动画增强）
+ */
+
+/* 统计卡片行 */
+.stats-cards-scroll {
+  white-space: nowrap;
+  margin-bottom: 24rpx;
+}
+
+.stat-card {
+  display: inline-block;
+  width: 300rpx;
+  margin-right: 16rpx;
+  vertical-align: top;
+  white-space: normal;
+  border: 1rpx solid rgba(245, 166, 35, 0.06);
+  transition: transform 0.2s;
+}
+
+.stat-card:last-child {
+  margin-right: 0;
+}
+
+.stat-num {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #f5a623;
+  margin-bottom: 8rpx;
+  line-height: 1;
+}
+
+.stat-label {
+  display: block;
+  font-size: 26rpx;
+  color: #ccc;
+  margin-bottom: 4rpx;
+}
+
+.stat-sub {
+  font-size: 22rpx;
+  color: #666;
+}
+
+/* 最常用动作 */
+.top-actions {
+  margin-top: 8rpx;
+}
+
+.top-action-item {
+  display: block;
+  font-size: 24rpx;
+  color: #ccc;
+  margin-bottom: 8rpx;
+  padding: 8rpx 12rpx;
+  background: rgba(245, 166, 35, 0.06);
+  border-radius: 8rpx;
+}
+
+.top-rank {
+  color: #f5a623;
+  font-weight: 700;
+  margin-right: 4rpx;
+}
+
+.top-count {
+  color: #999;
+  font-size: 20rpx;
+  float: right;
+}
+
+.top-action-empty {
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 图表区域 */
+.chart-section {
+  margin-bottom: 24rpx;
+}
+
+.action-picker {
+  flex-shrink: 0;
+}
+
+.picker-display {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  background: #333;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #f5a623;
+  transition: background 0.2s;
+}
+
+.picker-arrow {
+  font-size: 16rpx;
+}
+
+.chart-container {
+  width: 100%;
+  height: 400rpx;
+  margin-top: 10rpx;
+}
+
+.chart-container ec-canvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* 未安装 echarts 时的简单列表 */
+.chart-simple {
+  margin-top: 10rpx;
+}
+
+.chart-simple-title {
+  display: block;
+  font-size: 28rpx;
+  color: #f5a623;
+  margin-bottom: 16rpx;
+}
+
+.chart-simple-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12rpx 8rpx;
+  border-bottom: 1rpx solid #333;
+  transition: background 0.15s;
+}
+
+.chart-simple-date {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.chart-simple-value {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #fff;
+}
+
+.chart-simple-hint {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: #555;
+  margin-top: 20rpx;
+  padding: 12rpx;
+  border: 1rpx dashed #444;
+  border-radius: 8rpx;
+}
+
+.chart-empty {
+  text-align: center;
+  padding: 80rpx 0;
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 日历区域 */
+.calendar-section {
+  margin-bottom: 30rpx;
+}

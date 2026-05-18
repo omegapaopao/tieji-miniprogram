@@ -1,0 +1,79 @@
+<!--
+  统计页 — 数据可视化
+  动画: 统计卡片缩放弹入 + 图表区淡入 + 日历滑入
+-->
+<view class="container">
+  <!-- 统计卡片行 -->
+  <scroll-view class="stats-cards-scroll" scroll-x enable-flex>
+    <view class="stat-card card scale-in">
+      <text class="stat-num number-animate">{{weeklyCount}}</text>
+      <text class="stat-label">本周训练次数</text>
+      <text class="stat-sub">共 {{weeklyActions}} 个动作</text>
+    </view>
+    <view class="stat-card card scale-in delay-1">
+      <text class="stat-num number-animate">{{monthlyVolumeTons}}t</text>
+      <text class="stat-label">本月总容量</text>
+      <text class="stat-sub">{{monthlyVolumeKg}} kg</text>
+    </view>
+    <view class="stat-card card scale-in delay-2">
+      <text class="stat-label">最常用动作</text>
+      <view class="top-actions">
+        <text wx:for="{{topActions}}" wx:key="index" class="top-action-item">
+          <text class="top-rank">#{{index + 1}}</text> {{item.name}} <text class="top-count">{{item.count}}次</text>
+        </text>
+        <text wx:if="{{topActions.length === 0}}" class="top-action-empty">暂无数据</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 1RM 趋势折线图 -->
+  <view class="card chart-section card-enter delay-3">
+    <view class="card-header">
+      <text class="card-title">1RM 趋势</text>
+      <picker
+        class="action-picker"
+        mode="selector"
+        range="{{actionNames}}"
+        value="{{selectedActionIndex}}"
+        bindchange="onActionChange"
+      >
+        <view class="picker-display btn-press">
+          <text>{{selectedActionName || '选择动作'}}</text>
+          <text class="picker-arrow">▼</text>
+        </view>
+      </picker>
+    </view>
+
+    <view wx:if="{{hasEcharts && selectedActionName && chartData.length > 0}}" class="chart-container fade-in">
+      <ec-canvas
+        id="oneRMChart"
+        canvas-id="oneRMChart"
+        ec="{{ec}}"
+      ></ec-canvas>
+    </view>
+    <!-- 未安装 ec-canvas 时显示简单数据列表 -->
+    <view wx:elif="{{selectedActionName && chartData.length > 0 && !hasEcharts}}" class="chart-simple fade-in">
+      <text class="chart-simple-title">{{selectedActionName}} 历史 1RM</text>
+      <view wx:for="{{chartDates}}" wx:key="index" class="chart-simple-row">
+        <text class="chart-simple-date">{{item}}</text>
+        <text class="chart-simple-value">{{chartValues[index]}} kg</text>
+      </view>
+      <text class="chart-simple-hint">▼ 下载 ec-canvas 组件即可显示折线图</text>
+    </view>
+    <view wx:elif="{{selectedActionName && chartData.length === 0}}" class="chart-empty">
+      <text>该动作暂无训练数据</text>
+    </view>
+    <view wx:else class="chart-empty">
+      <text>选择动作查看 1RM 趋势</text>
+    </view>
+  </view>
+
+  <!-- 日历热力图 -->
+  <view class="card calendar-section card-enter delay-4">
+    <text class="card-title" style="margin-bottom:20rpx">训练日历</text>
+    <heatmap-calendar
+      trainingData="{{calendarData}}"
+      bind:daytap="onCalendarDayTap"
+    />
+  </view>
+</view>

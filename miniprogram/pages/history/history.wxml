@@ -1,0 +1,85 @@
+<!--
+  历史页 — 按日期分组查看训练记录，支持删除
+  动画: 骨架屏加载 + 日期组逐条滑入 + 折叠过渡 + 删除弹窗缩放
+-->
+<view class="container">
+  <!-- 骨架屏（加载中） -->
+  <block wx:if="{{loading}}">
+    <view class="skeleton" style="height:100rpx; margin-bottom:20rpx;" wx:for="{{[1,2,3]}}" wx:key="index"></view>
+  </block>
+
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && dateGroups.length === 0}}" class="empty-state fade-in">
+    <text class="empty-icon breathe">📋</text>
+    <text>还没有训练记录</text>
+    <text class="empty-hint">快去首页开始训练吧</text>
+  </view>
+
+  <!-- 按日期分组的记录列表 -->
+  <view wx:for="{{dateGroups}}" wx:key="date" class="date-group card-enter delay-{{index}}">
+    <!-- 日期头部 -->
+    <view
+      class="date-header card"
+      data-date="{{item.date}}"
+      bindtap="toggleDateGroup"
+      bindlongpress="onLongPressDate"
+      hover-class="date-header-hover"
+    >
+      <view class="date-info">
+        <text class="date-title">{{item.dateCN}}</text>
+        <text class="date-summary">{{item.records.length}} 个动作 · {{item.totalVolume}}kg</text>
+      </view>
+      <view class="date-arrow {{item.expanded ? 'expanded' : ''}}">
+        <text>▶</text>
+      </view>
+    </view>
+
+    <!-- 该日期下的记录（可折叠，带过渡动画） -->
+    <view wx:if="{{item.expanded}}" class="records-list">
+      <view
+        wx:for="{{item.records}}"
+        wx:for-item="record"
+        wx:key="_id"
+        class="card record-item card-enter delay-{{index}}"
+        hover-class="record-item-hover"
+      >
+        <view class="record-content">
+          <view class="record-left">
+            <text class="record-action">{{record.action_name}}</text>
+            <text class="record-detail">{{record.weight}}kg × {{record.sets}}组 × {{record.reps}}次</text>
+            <text wx:if="{{record.category}}" class="record-category tag tag-gold">{{record.category}}</text>
+          </view>
+          <view class="record-right">
+            <text class="record-1rm">{{record.one_rm}}</text>
+            <text class="record-1rm-label">1RM</text>
+          </view>
+        </view>
+        <!-- 删除按钮 -->
+        <view class="record-delete" data-id="{{record._id}}" bindtap="deleteRecord">
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{hasMore && !loading}}" class="load-more btn-press" bindtap="loadMore">
+    <text>{{loadingMore ? '加载中...' : '加载更多'}}</text>
+  </view>
+
+  <view wx:if="{{!hasMore && dateGroups.length > 0}}" class="load-more">
+    <text>— 已加载全部记录 —</text>
+  </view>
+
+  <!-- 确认删除弹窗 -->
+  <view wx:if="{{showDeleteModal}}" class="modal-mask" bindtap="closeDeleteModal">
+    <view class="modal-box scale-in" catchtap="">
+      <text class="modal-title">{{deleteTarget === 'single' ? '删除记录' : '删除整次训练'}}</text>
+      <text class="modal-content">{{deleteTarget === 'single' ? '确定要删除这条训练记录吗？' : '确定要删除该日期的全部训练记录吗？此操作不可恢复。'}}</text>
+      <view class="modal-btns">
+        <button class="btn-secondary btn-small btn-press" bindtap="closeDeleteModal">取消</button>
+        <button class="btn-primary btn-small btn-press" style="background:#e74c3c" bindtap="confirmDelete">确认删除</button>
+      </view>
+    </view>
+  </view>
+</view>

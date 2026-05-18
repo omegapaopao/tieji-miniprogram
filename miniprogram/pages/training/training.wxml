@@ -1,0 +1,134 @@
+<!--
+  首页 — 今日训练快捷开始
+  动画: 头部淡入 + 卡片逐条滑入 + 骨架屏 + 空状态脉冲
+-->
+<view class="container">
+  <!-- 顶部日期和问候 -->
+  <view class="header-section fade-in">
+    <view class="date-greeting">
+      <text class="date-text">{{dateCN}}</text>
+      <text class="greeting-text">{{greeting}}</text>
+    </view>
+    <view class="header-stats" wx:if="{{todayRecordCount > 0}}">
+      <text class="header-stat-num number-animate">{{todayRecordCount}}</text>
+      <text class="header-stat-label">组训练</text>
+    </view>
+  </view>
+
+  <!-- 励志语录卡片 -->
+  <view wx:if="{{!loading}}" class="quote-card card-enter">
+    <view class="quote-inner">
+      <text class="quote-mark">"</text>
+      <text class="quote-text">{{quoteText}}</text>
+      <text class="quote-mark right">"</text>
+    </view>
+    <view class="quote-footer">
+      <text class="quote-author">—— {{quoteAuthor}}</text>
+      <view class="quote-refresh btn-press" bindtap="refreshQuote" hover-class="quote-refresh-hover">
+        <text class="quote-refresh-icon">↻</text>
+        <text class="quote-refresh-text">换一条</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 骨架屏（加载中） -->
+  <block wx:if="{{loading}}">
+    <view class="card skeleton" style="height:140rpx; margin-bottom:30rpx;"></view>
+    <view class="skeleton" style="height:60rpx; width:60%; margin-bottom:16rpx;"></view>
+    <scroll-view class="scroll-x">
+      <view class="skeleton" style="width:140rpx; height:120rpx; display:inline-block; margin-right:16rpx; border-radius:16rpx;" wx:for="{{[1,2,3,4]}}" wx:key="index"></view>
+    </scroll-view>
+  </block>
+
+  <!-- 今日总容量卡片 -->
+  <view wx:if="{{!loading && todayRecordCount > 0}}" class="card today-summary card-enter">
+    <view class="summary-row">
+      <view class="summary-item">
+        <text class="data-highlight number-animate">{{todayVolume}}kg</text>
+        <text class="data-label">今日总容量</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-item">
+        <text class="data-highlight number-animate">{{todayActions}}</text>
+        <text class="data-label">动作数</text>
+      </view>
+      <view class="summary-divider"></view>
+      <view class="summary-item">
+        <text class="data-highlight number-animate">{{todayMaxWeight}}kg</text>
+        <text class="data-label">最大重量</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态引导 -->
+  <view wx:if="{{!loading && todayRecordCount === 0}}" class="card empty-training card-enter">
+    <view class="empty-icon breathe">🏋️</view>
+    <text class="empty-title">开始今日训练</text>
+    <text class="empty-desc">选择下方动作，记录你的每一次进步</text>
+  </view>
+
+  <!-- 今日已练动作 -->
+  <view wx:if="{{!loading && todayRecords.length > 0}}" class="today-records-section fade-in">
+    <text class="section-title">今日训练记录</text>
+    <view
+      wx:for="{{todayRecords}}"
+      wx:key="_id"
+      class="card record-card card-enter delay-{{index}}"
+      data-index="{{index}}"
+      bindtap="onTapRecord"
+      hover-class="card-hover"
+    >
+      <view class="record-main">
+        <view class="record-action-info">
+          <text class="record-action-name">{{item.action_name}}</text>
+          <text class="record-action-detail">{{item.weight}}kg × {{item.sets}}组 × {{item.reps}}次</text>
+        </view>
+        <view class="record-one-rm">
+          <text class="one-rm-value">{{item.one_rm}}</text>
+          <text class="one-rm-unit">1RM kg</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 动作选择区域 -->
+  <view class="action-picker-section fade-in">
+    <text class="section-title">选择训练动作</text>
+    <exercise-picker
+      exercises="{{exercises}}"
+      bind:select="onSelectExercise"
+      bind:addcustom="onAddCustom"
+    />
+  </view>
+
+  <!-- 添加自定义动作弹窗 -->
+  <view wx:if="{{showAddDialog}}" class="modal-mask" bindtap="closeAddDialog">
+    <view class="modal-box scale-in" catchtap="">
+      <text class="modal-title">添加自定义动作</text>
+      <input
+        class="modal-input"
+        placeholder="动作名称"
+        placeholder-style="color:#666"
+        value="{{customName}}"
+        bindinput="onCustomNameInput"
+        focus="{{showAddDialog}}"
+      />
+      <view class="modal-categories">
+        <view
+          wx:for="{{categories}}"
+          wx:key="value"
+          class="category-option {{customCategory === item.value ? 'active' : ''}}"
+          data-category="{{item.value}}"
+          bindtap="selectCustomCategory"
+          hover-class="category-hover"
+        >
+          <text>{{item.label}}</text>
+        </view>
+      </view>
+      <view class="modal-btns">
+        <button class="btn-secondary btn-small btn-press" bindtap="closeAddDialog">取消</button>
+        <button class="btn-primary btn-small btn-press" bindtap="confirmAddCustom">添加</button>
+      </view>
+    </view>
+  </view>
+</view>

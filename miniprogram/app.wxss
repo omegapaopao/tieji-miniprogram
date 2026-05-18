@@ -1,0 +1,446 @@
+/**
+ * 铁记 — 全局样式
+ * 深色运动风格主题，大字号数据展示
+ */
+
+/* ========== 基础变量 ========== */
+page {
+  --bg-primary: #1a1a1a;
+  --bg-card: #2a2a2a;
+  --bg-card-hover: #333333;
+  --text-primary: #ffffff;
+  --text-secondary: #999999;
+  --text-hint: #666666;
+  --accent-gold: #f5a623;
+  --accent-green: #4caf50;
+  --accent-red: #e74c3c;
+  --accent-blue: #3498db;
+  --border-color: #3a3a3a;
+  --radius-sm: 6rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 20rpx;
+  --font-xl: 52rpx;
+  --font-lg: 40rpx;
+  --font-md: 32rpx;
+  --font-sm: 26rpx;
+  --font-xs: 22rpx;
+
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-md);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+/* ========== 通用布局 ========== */
+.container {
+  padding: 20rpx 30rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ========== 卡片组件 ========== */
+.card {
+  background-color: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 30rpx;
+  margin-bottom: 24rpx;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.card-title {
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-subtitle {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+}
+
+/* ========== 按钮 ========== */
+.btn-primary {
+  background: linear-gradient(135deg, #f5a623, #f7931e);
+  color: #1a1a1a;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  font-weight: 600;
+  padding: 24rpx 0;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:active {
+  opacity: 0.85;
+}
+
+.btn-secondary {
+  background-color: var(--bg-card);
+  color: var(--accent-gold);
+  border: 2rpx solid var(--accent-gold);
+  border-radius: var(--radius-md);
+  font-size: var(--font-md);
+  padding: 20rpx 0;
+  text-align: center;
+}
+
+.btn-small {
+  font-size: var(--font-sm);
+  padding: 12rpx 24rpx;
+  border-radius: var(--radius-sm);
+}
+
+/* ========== 数据展示 ========== */
+.data-highlight {
+  font-size: var(--font-xl);
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.data-label {
+  font-size: var(--font-xs);
+  color: var(--text-secondary);
+  margin-top: 4rpx;
+}
+
+/* ========== 分割线 ========== */
+.divider {
+  height: 1rpx;
+  background-color: var(--border-color);
+  margin: 20rpx 0;
+}
+
+/* ========== 空状态 ========== */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 0;
+  color: var(--text-hint);
+}
+
+.empty-state image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 24rpx;
+  opacity: 0.4;
+}
+
+.empty-state text {
+  font-size: var(--font-sm);
+}
+
+/* ========== 滚动容器 ========== */
+.scroll-x {
+  display: flex;
+  white-space: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========== 标签 ========== */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: var(--font-xs);
+  margin-right: 8rpx;
+  margin-bottom: 8rpx;
+}
+
+.tag-gold {
+  background-color: rgba(245, 166, 35, 0.15);
+  color: var(--accent-gold);
+}
+
+.tag-green {
+  background-color: rgba(76, 175, 80, 0.15);
+  color: var(--accent-green);
+}
+
+.tag-blue {
+  background-color: rgba(52, 152, 219, 0.15);
+  color: var(--accent-blue);
+}
+
+/* ========== 加载更多 ========== */
+.load-more {
+  text-align: center;
+  padding: 30rpx 0;
+  color: var(--text-hint);
+  font-size: var(--font-sm);
+}
+
+/* ========== 弹窗/底部弹出 ========== */
+.sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.sheet-panel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 30rpx;
+  z-index: 1001;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* ========== 确认弹窗 ========== */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-box {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: 40rpx;
+  width: 560rpx;
+}
+
+.modal-title {
+  font-size: var(--font-md);
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+
+.modal-content {
+  font-size: var(--font-sm);
+  color: var(--text-secondary);
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-btns button {
+  flex: 1;
+  font-size: var(--font-md);
+  padding: 16rpx 0;
+  border-radius: var(--radius-sm);
+}
+
+/* ================================================================
+   全局动画系统
+   ================================================================ */
+
+/* ----- 卡片入场动画（逐条延迟）----- */
+.card-enter {
+  opacity: 0;
+  transform: translateY(30rpx);
+  animation: cardSlideIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes cardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 延迟工具类 */
+.delay-1  { animation-delay: 0.05s; }
+.delay-2  { animation-delay: 0.10s; }
+.delay-3  { animation-delay: 0.15s; }
+.delay-4  { animation-delay: 0.20s; }
+.delay-5  { animation-delay: 0.25s; }
+.delay-6  { animation-delay: 0.30s; }
+.delay-7  { animation-delay: 0.35s; }
+.delay-8  { animation-delay: 0.40s; }
+
+/* ----- 淡入动画 ----- */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ----- 缩放弹入 ----- */
+.scale-in {
+  opacity: 0;
+  transform: scale(0.85);
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ----- 数字跳动 ----- */
+@keyframes numberPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.number-animate {
+  animation: numberPulse 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ----- 按钮按压反馈 ----- */
+.btn-press {
+  transition: transform 0.12s ease;
+}
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+/* ----- 光泽扫过（卡片加载态）----- */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+/* ----- 脉冲呼吸 ----- */
+@keyframes breathe {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+.breathe {
+  animation: breathe 2s ease-in-out infinite;
+}
+
+/* ----- 庆祝粒子（保存成功）----- */
+@keyframes particleUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-200rpx) scale(0);
+  }
+}
+
+.particle-burst {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  animation: particleUp 0.8s ease-out forwards;
+}
+
+/* ----- 页面切换过渡 ----- */
+.page-enter {
+  opacity: 0;
+  transform: translateX(30rpx);
+  animation: pageSlideIn 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes pageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ----- 底部弹窗优化 ----- */
+.sheet-overlay {
+  animation: overlayFadeIn 0.25s ease;
+}
+
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ----- 进度条填充动画 ----- */
+@keyframes barFill {
+  from { width: 0% !important; }
+}
+
+.bar-animate {
+  animation: barFill 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* ----- 图标旋转 ----- */
+@keyframes iconSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.icon-spin {
+  animation: iconSpin 0.6s ease;
+}

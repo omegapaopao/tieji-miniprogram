@@ -1,0 +1,159 @@
+/**
+ * 组间休息计时器 — 样式
+ */
+.rest-timer {
+  padding: 30rpx 0;
+}
+
+/* 时间选择 */
+.timer-label {
+  display: block;
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+
+.time-options {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16rpx;
+  margin-bottom: 30rpx;
+}
+
+.time-option {
+  background: #333;
+  border-radius: 12rpx;
+  padding: 16rpx 28rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s;
+}
+
+.time-option.active {
+  border-color: #f5a623;
+  background: rgba(245, 166, 35, 0.15);
+}
+
+.time-value {
+  font-size: 28rpx;
+  color: #ccc;
+}
+
+.time-option.active .time-value {
+  color: #f5a623;
+  font-weight: 600;
+}
+
+.timer-start-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+  background: #f5a623;
+  color: #1a1a1a;
+  border-radius: 12rpx;
+  padding: 20rpx 0;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+
+.start-icon {
+  font-size: 28rpx;
+}
+
+/* 计时中 */
+.timer-running {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle-progress {
+  position: relative;
+  width: 280rpx;
+  height: 280rpx;
+  margin-bottom: 30rpx;
+}
+
+.progress-canvas {
+  width: 280rpx;
+  height: 280rpx;
+}
+
+.circle-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.countdown-text {
+  display: block;
+  font-size: 80rpx;
+  font-weight: 700;
+  color: #f5a623;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.timer-actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+/* 完成 */
+.timer-done {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx 0;
+}
+
+.done-icon {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #4caf50;
+  color: #fff;
+  font-size: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.done-text {
+  font-size: 36rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.done-sub {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 30rpx;
+}
+
+/* 通用按钮 */
+.timer-btn {
+  padding: 16rpx 40rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+}
+
+.timer-btn.cancel {
+  background: transparent;
+  color: #e74c3c;
+  border: 2rpx solid #e74c3c;
+}
+
+.timer-btn.restart {
+  background: #f5a623;
+  color: #1a1a1a;
+}

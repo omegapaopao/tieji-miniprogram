@@ -1,0 +1,124 @@
+<!--
+  AI 动作分析页 — 演示版
+  动画: 卡片逐条入场 + 旋转加载器 + 评分数字脉冲 + 进度条填充 + 报告逐段揭示
+-->
+<view class="container">
+  <!-- 未选择视频 -->
+  <view wx:if="{{!videoSelected && !analyzing && !reportReady}}" class="upload-section">
+    <view class="card upload-card card-enter">
+      <view class="upload-icon breathe">🎬</view>
+      <text class="upload-title">上传训练视频</text>
+      <text class="upload-desc">拍摄或选择一段动作视频（10秒以内）\n分析你的动作姿态和发力模式</text>
+      <view class="upload-actions">
+        <view class="btn-primary upload-btn btn-press" bindtap="chooseVideo">
+          <text>选择视频</text>
+        </view>
+        <text class="upload-hint">支持 mp4, mov 格式</text>
+      </view>
+      <view class="action-link">
+        <text class="action-link-label">关联动作：</text>
+        <text class="action-link-value">{{actionName || '未指定'}}</text>
+      </view>
+    </view>
+
+    <view class="card info-card card-enter delay-1">
+      <text class="info-title">AI 能做什么？</text>
+      <view class="info-list">
+        <view class="info-item"><text class="info-dot">•</text><text>动作标准度评分</text></view>
+        <view class="info-item"><text class="info-dot">•</text><text>关键姿态分析</text></view>
+        <view class="info-item"><text class="info-dot">•</text><text>改进建议（发力/轨迹/节奏）</text></view>
+        <view class="info-item"><text class="info-dot">•</text><text>受伤风险预警</text></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 视频已选择 -->
+  <view wx:if="{{videoSelected && !analyzing && !reportReady}}" class="preview-section scale-in">
+    <view class="card">
+      <text class="preview-label">已选择视频</text>
+      <video class="preview-video" src="{{videoUrl}}" controls show-center-play-btn object-fit="contain"></video>
+      <view class="preview-actions">
+        <view class="btn-secondary btn-small btn-press" bindtap="chooseVideo"><text>重新选择</text></view>
+        <view class="btn-primary btn-small btn-press" bindtap="startAnalysis"><text>开始分析</text></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分析中动画 -->
+  <view wx:if="{{analyzing}}" class="analyzing-section fade-in">
+    <view class="card analyzing-card">
+      <view class="spinner">
+        <view class="spinner-ring"></view>
+        <text class="spinner-icon">🔍</text>
+      </view>
+      <text class="analyzing-title">AI 分析中...</text>
+      <text class="analyzing-step">{{analyzingStep}}</text>
+      <view class="progress-bar">
+        <view class="progress-fill bar-animate" style="width: {{analyzeProgress}}%"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 分析报告 -->
+  <view wx:if="{{reportReady}}" class="report-section">
+    <!-- 评分卡片 -->
+    <view class="card score-card scale-in">
+      <view class="score-header">
+        <text class="score-label">动作完成度</text>
+        <text class="score-value gold number-animate">{{report.score}}</text>
+        <text class="score-unit">分</text>
+      </view>
+      <view class="score-bar-bg">
+        <view class="score-bar-fill bar-animate" style="width: {{report.score}}%"></view>
+      </view>
+      <text class="score-action-name">{{report.actionName || actionName}}</text>
+    </view>
+
+    <!-- 关键帧截图 -->
+    <view class="card keyframes-card card-enter delay-1">
+      <text class="card-title">关键帧分析</text>
+      <view class="keyframes-grid">
+        <view class="keyframe-placeholder" wx:for="{{['起始位','最低点','结束位']}}" wx:key="index">
+          <text class="keyframe-icon">🖼</text>
+          <text class="keyframe-label">{{item}}</text>
+        </view>
+      </view>
+      <text class="keyframe-hint">＊ 关键帧截图将在正式版中接入真实 AI 后显示</text>
+    </view>
+
+    <!-- 改进建议 -->
+    <view class="card suggestions-card card-enter delay-2">
+      <text class="card-title">改进建议</text>
+      <view wx:for="{{report.suggestions}}" wx:key="index" class="suggestion-item card-enter delay-{{index + 2}}">
+        <view class="suggestion-num">{{index + 1}}</view>
+        <text class="suggestion-text">{{item}}</text>
+      </view>
+    </view>
+
+    <!-- 详细数据 -->
+    <view class="card detail-card card-enter delay-3">
+      <text class="card-title">分析详情</text>
+      <view class="detail-row">
+        <text class="detail-label">动作轨迹</text>
+        <text class="detail-value">{{report.trajectory}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">发力节奏</text>
+        <text class="detail-value">{{report.rhythm}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">关节压力</text>
+        <text class="detail-value">{{report.jointStress}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">风险等级</text>
+        <text class="detail-value risk-{{report.riskLevel === '低' ? 'low' : 'mid'}}">{{report.riskLevel}}</text>
+      </view>
+    </view>
+
+    <!-- 重新分析 -->
+    <view class="btn-secondary reanalyze-btn btn-press" bindtap="resetAnalysis">
+      <text>重新分析</text>
+    </view>
+  </view>
+</view>

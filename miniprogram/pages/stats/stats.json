@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "数据统计",
+  "usingComponents": {
+    "ec-canvas": "/lib/echarts/ec-canvas",
+    "heatmap-calendar": "/components/heatmap-calendar/heatmap-calendar"
+  }
+}

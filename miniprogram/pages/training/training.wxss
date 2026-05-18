@@ -1,0 +1,311 @@
+/**
+ * 首页 — 训练页样式（含动画增强）
+ */
+
+/* 顶部区域 */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20rpx 0 30rpx;
+}
+
+.date-text {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+  letter-spacing: 1rpx;
+}
+
+.greeting-text {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.header-stats {
+  text-align: center;
+  background: rgba(245, 166, 35, 0.1);
+  border-radius: 20rpx;
+  padding: 12rpx 24rpx;
+}
+
+.header-stat-num {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #f5a623;
+}
+
+.header-stat-label {
+  font-size: 22rpx;
+  color: #f5a623;
+  opacity: 0.7;
+}
+
+/* 励志语录卡片 */
+.quote-card {
+  background: linear-gradient(135deg, #2a2a2a 0%, #252528 100%);
+  border-radius: 16rpx;
+  padding: 36rpx 32rpx;
+  margin-bottom: 30rpx;
+  position: relative;
+  overflow: hidden;
+  border-left: 6rpx solid rgba(245, 166, 35, 0.5);
+}
+
+/* 语录背景装饰 */
+.quote-card::before {
+  content: '';
+  position: absolute;
+  top: -30rpx;
+  right: -20rpx;
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 166, 35, 0.06) 0%, transparent 70%);
+}
+
+.quote-inner {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.quote-mark {
+  font-size: 64rpx;
+  color: #f5a623;
+  font-weight: 300;
+  line-height: 0.6;
+  font-family: Georgia, 'Times New Roman', serif;
+  opacity: 0.6;
+}
+
+.quote-mark:first-child {
+  margin-right: 8rpx;
+  margin-top: 4rpx;
+}
+
+.quote-mark.right {
+  align-self: flex-end;
+  margin-left: 8rpx;
+  margin-bottom: -8rpx;
+}
+
+.quote-text {
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #e0ddd5;
+  line-height: 1.8;
+  letter-spacing: 2rpx;
+  font-family: 'STKaiti', 'KaiTi', '楷体', serif;
+  text-align: justify;
+}
+
+.quote-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16rpx;
+  border-top: 1rpx solid rgba(255, 255, 255, 0.06);
+}
+
+.quote-author {
+  font-size: 24rpx;
+  color: #888;
+  font-style: italic;
+  letter-spacing: 1rpx;
+}
+
+.quote-refresh {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 20rpx;
+  background: rgba(245, 166, 35, 0.08);
+  transition: all 0.2s ease;
+}
+
+.quote-refresh-hover {
+  background: rgba(245, 166, 35, 0.2);
+}
+
+.quote-refresh-icon {
+  font-size: 26rpx;
+  color: #f5a623;
+  font-weight: 300;
+}
+
+.quote-refresh-text {
+  font-size: 22rpx;
+  color: #f5a623;
+  opacity: 0.8;
+}
+
+/* 今日总览卡片 */
+.today-summary {
+  margin-bottom: 30rpx;
+  border: 1rpx solid rgba(245, 166, 35, 0.08);
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+}
+
+.summary-item {
+  flex: 1;
+  text-align: center;
+}
+
+.summary-divider {
+  width: 1rpx;
+  height: 60rpx;
+  background: linear-gradient(180deg, transparent, #3a3a3a, transparent);
+}
+
+/* 空状态 */
+.empty-training {
+  text-align: center;
+  padding: 60rpx 30rpx;
+  margin-bottom: 30rpx;
+  border: 1rpx dashed #333;
+  background: transparent;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 16rpx;
+  display: inline-block;
+}
+
+.empty-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 今日训练记录 */
+.today-records-section {
+  margin-bottom: 30rpx;
+}
+
+.section-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+  color: #ccc;
+  padding-left: 4rpx;
+  border-left: 6rpx solid #f5a623;
+  padding: 4rpx 0 4rpx 16rpx;
+}
+
+.record-card {
+  padding: 24rpx 30rpx;
+  margin-bottom: 12rpx;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border-left: 4rpx solid transparent;
+}
+
+.card-hover {
+  transform: scale(0.98);
+  border-left-color: #f5a623;
+  box-shadow: 0 0 20rpx rgba(245, 166, 35, 0.1);
+}
+
+.record-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-action-name {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.record-action-detail {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.record-one-rm {
+  text-align: right;
+}
+
+.one-rm-value {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #f5a623;
+}
+
+.one-rm-unit {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 动作选择 */
+.action-picker-section {
+  margin-top: 10rpx;
+}
+
+/* 添加自定义弹窗 */
+.modal-input {
+  background: #1a1a1a;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #fff;
+  margin-bottom: 20rpx;
+  border: 1rpx solid #3a3a3a;
+  transition: border-color 0.2s;
+}
+
+.modal-input:focus {
+  border-color: #f5a623;
+}
+
+.modal-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 24rpx;
+}
+
+.category-option {
+  background: #333;
+  padding: 10rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.category-option.active {
+  border-color: #f5a623;
+  color: #f5a623;
+  background: rgba(245, 166, 35, 0.15);
+  transform: scale(1.05);
+}
+
+.category-hover {
+  background: #444;
+}
+
+.modal-btns button {
+  font-size: 28rpx !important;
+  line-height: 1.5 !important;
+}

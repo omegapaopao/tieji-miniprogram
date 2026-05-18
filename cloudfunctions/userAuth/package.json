@@ -1,0 +1,6 @@
+{
+  "name": "userAuth",
+  "version": "1.0.0",
+  "description": "用户认证云函数 - 注册/登录/会话检查",
+  "main": "index.js"
+}

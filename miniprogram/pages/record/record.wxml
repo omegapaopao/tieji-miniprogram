@@ -1,0 +1,149 @@
+<!--
+  记录页 — 重量/组数/次数输入 + 1RM 计算 + 组间休息计时器
+  动画: 1RM数字脉冲 + 步进器按压 + 保存成功粒子特效 + 计时器滑入
+-->
+<view class="container">
+  <!-- 粒子特效层 -->
+  <view wx:if="{{showParticles}}" class="particle-burst">
+    <view
+      wx:for="{{particles}}"
+      wx:key="index"
+      class="particle"
+      style="left: {{item.x}}rpx; top: {{item.y}}rpx; background: {{item.color}}; width: {{item.size}}rpx; height: {{item.size}}rpx; animation-delay: {{item.delay}}s;"
+    ></view>
+  </view>
+
+  <!-- 保存成功浮层 -->
+  <view wx:if="{{showSuccess}}" class="success-overlay fade-in">
+    <view class="success-card scale-in">
+      <view class="success-check">✓</view>
+      <text class="success-title">记录已保存</text>
+      <text class="success-detail">{{actionName}} {{weight}}kg × {{sets}}×{{reps}}</text>
+      <text class="success-1rm">1RM {{oneRM}} kg</text>
+    </view>
+  </view>
+
+  <!-- 动作信息头部 -->
+  <view class="action-header card card-enter">
+    <view class="action-info">
+      <text class="action-name">{{actionName}}</text>
+      <text class="action-category">{{category}}</text>
+    </view>
+    <!-- 1RM 大数字展示 -->
+    <view class="one-rm-display">
+      <text class="one-rm-label">估算 1RM</text>
+      <text class="one-rm-big {{oneRMPulse ? 'number-animate' : ''}}">{{oneRM || '0'}}</text>
+      <text class="one-rm-unit">kg</text>
+    </view>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-section card card-enter delay-1">
+    <!-- 重量输入 -->
+    <view class="input-row">
+      <text class="input-label">重量</text>
+      <view class="stepper">
+        <view class="stepper-btn btn-press" bindtap="decreaseWeight" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">−</text>
+        </view>
+        <input
+          class="stepper-input"
+          type="digit"
+          value="{{weight}}"
+          bindinput="onWeightInput"
+          placeholder="0"
+          placeholder-style="color:#444"
+        />
+        <view class="stepper-btn btn-press" bindtap="increaseWeight" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">+</text>
+        </view>
+      </view>
+      <text class="input-unit">kg</text>
+    </view>
+
+    <!-- 组数输入 -->
+    <view class="input-row">
+      <text class="input-label">组数</text>
+      <view class="stepper">
+        <view class="stepper-btn btn-press" bindtap="decreaseSets" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">−</text>
+        </view>
+        <input
+          class="stepper-input"
+          type="number"
+          value="{{sets}}"
+          bindinput="onSetsInput"
+          placeholder="0"
+          placeholder-style="color:#444"
+        />
+        <view class="stepper-btn btn-press" bindtap="increaseSets" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">+</text>
+        </view>
+      </view>
+      <text class="input-unit">组</text>
+    </view>
+
+    <!-- 次数输入 -->
+    <view class="input-row">
+      <text class="input-label">次数</text>
+      <view class="stepper">
+        <view class="stepper-btn btn-press" bindtap="decreaseReps" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">−</text>
+        </view>
+        <input
+          class="stepper-input"
+          type="number"
+          value="{{reps}}"
+          bindinput="onRepsInput"
+          placeholder="0"
+          placeholder-style="color:#444"
+        />
+        <view class="stepper-btn btn-press" bindtap="increaseReps" hover-class="stepper-btn-active">
+          <text class="stepper-symbol">+</text>
+        </view>
+      </view>
+      <text class="input-unit">次</text>
+    </view>
+
+    <!-- 计算值展示 -->
+    <view class="calc-row">
+      <view class="calc-item">
+        <text class="calc-value">{{volume}} kg</text>
+        <text class="calc-label">训练容量</text>
+      </view>
+      <view class="calc-item">
+        <text class="calc-value 1rm-calc {{oneRMPulse ? 'number-animate' : ''}}">{{oneRM}} kg</text>
+        <text class="calc-label">1RM (Epley)</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 组间休息计时器 -->
+  <view class="card timer-section card-enter delay-2">
+    <view class="timer-toggle btn-press" bindtap="toggleTimer">
+      <text class="timer-toggle-icon">{{showTimer ? '▲' : '▼'}}</text>
+      <text class="timer-toggle-text">
+        {{showTimer ? '收起计时器' : '组间休息计时器'}}
+      </text>
+    </view>
+    <view wx:if="{{showTimer}}" class="timer-content fade-in">
+      <rest-timer
+        show="{{showTimer}}"
+        bind:complete="onTimerComplete"
+        bind:cancel="onTimerCancel"
+      />
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="save-section card-enter delay-3">
+    <view class="btn-primary save-btn btn-press" bindtap="saveRecord">
+      <text class="save-btn-text">保存训练记录</text>
+    </view>
+    <!-- 上传视频分析入口 -->
+    <view class="ai-entry btn-press" bindtap="goToAIAnalysis" hover-class="ai-entry-hover">
+      <text>🎬 上传视频进行 AI 动作分析</text>
+      <text class="ai-arrow">→</text>
+    </view>
+  </view>
+</view>

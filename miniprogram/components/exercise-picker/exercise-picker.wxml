@@ -1,0 +1,41 @@
+<!--
+  动作选择器组件
+  动画: 标签切换过渡 + 卡片hover缩放 + 自定义按钮旋转
+-->
+<view class="exercise-picker">
+  <!-- 分类筛选 -->
+  <scroll-view class="category-scroll" scroll-x enable-flex>
+    <view
+      wx:for="{{categories}}"
+      wx:key="value"
+      class="category-tag {{activeCategory === item.value ? 'active' : ''}}"
+      data-category="{{item.value}}"
+      bindtap="switchCategory"
+      hover-class="category-tag-hover"
+    >
+      <text>{{item.label}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 动作列表 -->
+  <scroll-view class="exercise-scroll" scroll-x enable-flex>
+    <!-- 自定义动作入口 -->
+    <view class="exercise-item add-new btn-press" bindtap="onAddCustom" hover-class="add-new-hover">
+      <view class="exercise-icon add-icon">+</view>
+      <text class="exercise-name">自定义</text>
+    </view>
+
+    <view
+      wx:for="{{filteredExercises}}"
+      wx:key="_id"
+      class="exercise-item"
+      data-exercise="{{item}}"
+      bindtap="onSelectExercise"
+      hover-class="exercise-item-hover"
+    >
+      <view class="exercise-icon">💪</view>
+      <text class="exercise-name">{{item.name}}</text>
+      <text class="exercise-category">{{item.category}}</text>
+    </view>
+  </scroll-view>
+</view>

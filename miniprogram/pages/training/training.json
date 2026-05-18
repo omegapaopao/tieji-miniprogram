@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "铁记",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "exercise-picker": "/components/exercise-picker/exercise-picker"
+  }
+}

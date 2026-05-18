@@ -1,0 +1,147 @@
+/**
+ * 日历热力图 — 样式（含动画增强）
+ */
+.heatmap-calendar {
+  background: transparent;
+}
+
+/* 月份导航 */
+.heatmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rpx 0 20rpx;
+  gap: 30rpx;
+}
+
+.month-nav {
+  width: 50rpx;
+  height: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #2a2a2a;
+  transition: all 0.2s ease;
+}
+
+.month-nav:active {
+  background: #444;
+  transform: scale(0.9);
+}
+
+.nav-arrow {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.month-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  min-width: 200rpx;
+  text-align: center;
+}
+
+/* 星期头 */
+.weekday-header {
+  display: flex;
+  margin-bottom: 8rpx;
+}
+
+.weekday-cell {
+  flex: 1;
+  text-align: center;
+  font-size: 22rpx;
+  color: #666;
+  padding: 6rpx 0;
+}
+
+/* 日历网格 */
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.day-cell {
+  width: calc(100% / 7);
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8rpx;
+  position: relative;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.day-cell.empty {
+  visibility: hidden;
+}
+
+.day-cell:not(.empty):active {
+  transform: scale(0.85);
+}
+
+.day-num {
+  font-size: 24rpx;
+  color: #999;
+  z-index: 1;
+  transition: color 0.2s;
+}
+
+.day-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #f5a623;
+  margin-top: 2rpx;
+  transition: transform 0.3s ease;
+}
+
+.day-cell:not(.empty):active .day-dot {
+  transform: scale(1.5);
+}
+
+/* 热力等级 — 4 级深浅 */
+.day-cell.level-0 { background: transparent; }
+.day-cell.level-1 { background: rgba(76, 175, 80, 0.15); }
+.day-cell.level-2 { background: rgba(76, 175, 80, 0.3); }
+.day-cell.level-3 { background: rgba(76, 175, 80, 0.5); }
+.day-cell.level-4 { background: rgba(76, 175, 80, 0.75); }
+
+/* 今天高亮 */
+.day-cell.today {
+  border: 2rpx solid #f5a623;
+  border-radius: 8rpx;
+  box-shadow: 0 0 12rpx rgba(245, 166, 35, 0.2);
+}
+
+.day-cell.today .day-num {
+  color: #f5a623;
+  font-weight: 600;
+}
+
+/* 图例 */
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8rpx;
+  margin-top: 16rpx;
+}
+
+.legend-label {
+  font-size: 20rpx;
+  color: #666;
+}
+
+.legend-cell {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 4rpx;
+}
+
+.legend-cell.level-1 { background: rgba(76, 175, 80, 0.15); }
+.legend-cell.level-2 { background: rgba(76, 175, 80, 0.3); }
+.legend-cell.level-3 { background: rgba(76, 175, 80, 0.5); }
+.legend-cell.level-4 { background: rgba(76, 175, 80, 0.75); }

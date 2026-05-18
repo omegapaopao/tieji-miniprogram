@@ -1,0 +1,55 @@
+<!--
+  组间休息计时器组件
+  功能: 选择休息时长 + 圆形倒计时 + 震动提醒
+-->
+<view class="rest-timer">
+  <!-- 未开始计时: 显示时间选择 -->
+  <view wx:if="{{!isRunning && !isDone}}" class="timer-select">
+    <text class="timer-label">组间休息</text>
+    <view class="time-options">
+      <view
+        wx:for="{{timeOptions}}"
+        wx:key="value"
+        class="time-option {{selectedTime === item.value ? 'active' : ''}}"
+        data-time="{{item.value}}"
+        bindtap="selectTime"
+      >
+        <text class="time-value">{{item.label}}</text>
+      </view>
+    </view>
+    <view class="timer-start-btn" bindtap="startTimer">
+      <text class="start-icon">▶</text>
+      <text>开始休息</text>
+    </view>
+  </view>
+
+  <!-- 计时中: 圆形倒计时 -->
+  <view wx:if="{{isRunning}}" class="timer-running">
+    <view class="circle-progress">
+      <canvas
+        class="progress-canvas"
+        canvas-id="timerCanvas"
+        id="timerCanvas"
+      ></canvas>
+      <view class="circle-center">
+        <text class="countdown-text">{{displayTime}}</text>
+        <text class="countdown-label">秒</text>
+      </view>
+    </view>
+    <view class="timer-actions">
+      <view class="timer-btn cancel" bindtap="cancelTimer">
+        <text>✕ 跳过</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 计时完成 -->
+  <view wx:if="{{isDone}}" class="timer-done">
+    <view class="done-icon">✓</view>
+    <text class="done-text">休息完毕</text>
+    <text class="done-sub">可以开始下一组训练</text>
+    <view class="timer-btn restart" bindtap="startTimer">
+      <text>再来一组</text>
+    </view>
+  </view>
+</view>

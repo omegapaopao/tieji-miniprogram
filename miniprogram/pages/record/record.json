@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "训练记录",
+  "usingComponents": {
+    "rest-timer": "/components/rest-timer/rest-timer"
+  }
+}

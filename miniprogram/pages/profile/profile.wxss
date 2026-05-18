@@ -1,0 +1,372 @@
+/**
+ * 我的页 — 样式（含动画增强）
+ */
+
+/* 用户头像 */
+.user-header {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  margin-bottom: 24rpx;
+  border: 1rpx solid rgba(245, 166, 35, 0.08);
+  position: relative;
+}
+
+.user-avatar-wrap {
+  position: relative;
+}
+
+.user-avatar-img {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  border: 3rpx solid #f5a623;
+  box-shadow: 0 4rpx 20rpx rgba(245, 166, 35, 0.2);
+}
+
+.user-avatar-default {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f5a623, #f7931e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 20rpx rgba(245, 166, 35, 0.3);
+}
+
+.avatar-default-text {
+  font-size: 48rpx;
+}
+
+.user-name {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.user-desc {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* 退出登录按钮 */
+.logout-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: rgba(231, 76, 60, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.logout-btn-hover {
+  background: rgba(231, 76, 60, 0.3);
+  transform: translateY(-50%) scale(0.9);
+}
+
+.logout-icon {
+  font-size: 28rpx;
+  color: #e74c3c;
+}
+
+/* 动作库 */
+.profile-category-scroll {
+  white-space: nowrap;
+  margin-bottom: 16rpx;
+}
+
+.profile-category-tag {
+  display: inline-block;
+  background: #1a1a1a;
+  color: #999;
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 16rpx;
+  margin-right: 10rpx;
+  transition: all 0.2s ease;
+}
+
+.profile-category-tag.active {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+  transform: scale(1.05);
+}
+
+.category-tag-hover {
+  background: #333;
+}
+
+.exercise-list {
+  margin-bottom: 20rpx;
+}
+
+.exercise-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #333;
+  transition: background 0.15s;
+}
+
+.exercise-list-item:last-child {
+  border-bottom: none;
+}
+
+.exercise-list-name {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.exercise-list-delete {
+  padding: 8rpx 20rpx;
+  border-radius: 8rpx;
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+  font-size: 22rpx;
+  transition: all 0.2s;
+}
+
+.delete-btn-hover {
+  background: rgba(231, 76, 60, 0.35);
+  transform: scale(0.95);
+}
+
+/* 添加动作按钮 */
+.add-exercise-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 20rpx 0;
+  border: 2rpx dashed #444;
+  border-radius: 12rpx;
+  color: #999;
+  font-size: 26rpx;
+  transition: all 0.2s;
+}
+
+.add-btn-hover {
+  border-color: #f5a623;
+  color: #f5a623;
+  background: rgba(245, 166, 35, 0.06);
+}
+
+.add-icon {
+  font-size: 32rpx;
+  color: #f5a623;
+  transition: transform 0.3s;
+}
+
+.add-btn-hover .add-icon {
+  transform: rotate(90deg);
+}
+
+/* 添加表单 */
+.add-form {
+  margin-bottom: 24rpx;
+}
+
+.form-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.form-input {
+  background: #1a1a1a;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  color: #fff;
+  margin-bottom: 16rpx;
+  border: 1rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  border-color: #f5a623;
+}
+
+.form-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+  margin-bottom: 20rpx;
+}
+
+.form-category {
+  background: #333;
+  padding: 10rpx 24rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.form-category.active {
+  border-color: #f5a623;
+  color: #f5a623;
+  background: rgba(245, 166, 35, 0.15);
+  transform: scale(1.05);
+}
+
+.form-cat-hover {
+  background: #444;
+}
+
+.form-btns {
+  display: flex;
+  gap: 16rpx;
+}
+
+.form-btns view {
+  flex: 1;
+  text-align: center;
+}
+
+/* 数据概览 */
+.stats-overview {
+  margin-bottom: 24rpx;
+}
+
+.overview-grid {
+  display: flex;
+  margin-top: 16rpx;
+}
+
+.overview-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+
+.overview-item + .overview-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 1rpx;
+  background: #333;
+}
+
+.overview-num {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #f5a623;
+  margin-bottom: 4rpx;
+}
+
+.overview-label {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 意见反馈 */
+.feedback-card {
+  margin-bottom: 24rpx;
+  cursor: pointer;
+}
+
+.feedback-card-inner {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.feedback-icon-wrap {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: rgba(52, 152, 219, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-icon {
+  font-size: 36rpx;
+}
+
+.feedback-info {
+  flex: 1;
+}
+
+.feedback-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.feedback-desc {
+  font-size: 22rpx;
+  color: #888;
+}
+
+.feedback-arrow {
+  font-size: 40rpx;
+  color: #555;
+  font-weight: 300;
+}
+
+/* 反馈弹窗 */
+.feedback-modal {
+  width: 600rpx;
+}
+
+.feedback-textarea {
+  background: #1a1a1a;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 26rpx;
+  color: #fff;
+  width: 100%;
+  min-height: 200rpx;
+  max-height: 400rpx;
+  box-sizing: border-box;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.feedback-textarea:focus {
+  border-color: #f5a623;
+}
+
+.feedback-count {
+  display: block;
+  text-align: right;
+  font-size: 20rpx;
+  color: #666;
+  margin-top: 8rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 关于 */
+.about-section {
+  margin-bottom: 30rpx;
+}
+
+.about-text {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+.about-hint {
+  color: #f5a623;
+  margin-top: 16rpx;
+}

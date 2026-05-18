@@ -1,0 +1,4 @@
+<!-- ec-canvas 占位组件 — 下载 echarts-for-weixin 后替换 -->
+<view class="ec-canvas-placeholder">
+  <slot />
+</view>

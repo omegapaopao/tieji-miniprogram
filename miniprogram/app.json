@@ -1,0 +1,46 @@
+{
+  "pages": [
+    "pages/training/training",
+    "pages/history/history",
+    "pages/stats/stats",
+    "pages/profile/profile",
+    "pages/auth/auth",
+    "pages/record/record",
+    "pages/ai-analysis/ai-analysis",
+    "pages/feedback/feedback"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#1a1a1a",
+    "navigationBarTitleText": "铁记",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#1a1a1a"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#f5a623",
+    "backgroundColor": "#1a1a1a",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/training/training",
+        "text": "训练"
+      },
+      {
+        "pagePath": "pages/history/history",
+        "text": "历史"
+      },
+      {
+        "pagePath": "pages/stats/stats",
+        "text": "统计"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

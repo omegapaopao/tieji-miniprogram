@@ -1,0 +1,55 @@
+<!--
+  意见反馈页 — 评论区
+  动画: 列表逐条入场 + 输入框聚焦高亮
+-->
+<view class="container">
+  <!-- 反馈列表 -->
+  <view wx:if="{{feedbacks.length > 0}}" class="feedback-list">
+    <view
+      wx:for="{{feedbacks}}"
+      wx:key="_id"
+      class="feedback-item card-enter delay-{{index < 5 ? index : 5}}"
+    >
+      <view class="feedback-avatar">
+        <text class="feedback-avatar-text">{{item.avatarChar}}</text>
+      </view>
+      <view class="feedback-body">
+        <view class="feedback-header">
+          <text class="feedback-username">{{item.username}}</text>
+          <text class="feedback-time">{{item.timeText}}</text>
+        </view>
+        <text class="feedback-content">{{item.content}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <view class="empty-icon breathe">💬</view>
+    <text class="empty-title">暂无反馈</text>
+    <text class="empty-desc">成为第一个留下意见的人吧</text>
+  </view>
+
+  <!-- 底部发布栏 -->
+  <view class="post-bar">
+    <view class="post-input-wrap">
+      <input
+        class="post-input"
+        placeholder="写下你的意见或建议..."
+        placeholder-style="color:#666"
+        value="{{postText}}"
+        bindinput="onPostInput"
+        maxlength="500"
+        confirm-type="send"
+        bindconfirm="submitFeedback"
+      />
+      <text class="post-count">{{postText.length}}/500</text>
+    </view>
+    <view
+      class="post-send-btn btn-press {{postText.trim() ? 'active' : ''}}"
+      bindtap="submitFeedback"
+    >
+      <text class="post-send-icon">↑</text>
+    </view>
+  </view>
+</view>

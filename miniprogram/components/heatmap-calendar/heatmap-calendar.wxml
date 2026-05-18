@@ -1,0 +1,55 @@
+<!--
+  日历热力图组件
+  类似 GitHub contribution graph
+  颜色深浅表示当天训练量大小
+-->
+<view class="heatmap-calendar">
+  <!-- 月份导航 -->
+  <view class="heatmap-header">
+    <view class="month-nav" bindtap="prevMonth">
+      <text class="nav-arrow">◀</text>
+    </view>
+    <text class="month-title">{{currentYear}}年{{currentMonth}}月</text>
+    <view class="month-nav" bindtap="nextMonth">
+      <text class="nav-arrow">▶</text>
+    </view>
+  </view>
+
+  <!-- 星期头 -->
+  <view class="weekday-header">
+    <text wx:for="{{weekdayLabels}}" wx:key="index" class="weekday-cell">{{item}}</text>
+  </view>
+
+  <!-- 日历网格 -->
+  <view class="calendar-grid">
+    <!-- 空白填充（月初对齐） -->
+    <view
+      wx:for="{{blankCells}}"
+      wx:key="index"
+      class="day-cell empty"
+    ></view>
+
+    <!-- 日期格子 -->
+    <view
+      wx:for="{{dayCells}}"
+      wx:key="index"
+      class="day-cell level-{{item.level}} {{item.isToday ? 'today' : ''}}"
+      data-date="{{item.date}}"
+      data-has-record="{{item.hasRecord}}"
+      bindtap="onDayTap"
+    >
+      <text class="day-num">{{item.day}}</text>
+      <view wx:if="{{item.hasRecord}}" class="day-dot"></view>
+    </view>
+  </view>
+
+  <!-- 图例 -->
+  <view class="heatmap-legend">
+    <text class="legend-label">少</text>
+    <view class="legend-cell level-1"></view>
+    <view class="legend-cell level-2"></view>
+    <view class="legend-cell level-3"></view>
+    <view class="legend-cell level-4"></view>
+    <text class="legend-label">多</text>
+  </view>
+</view>

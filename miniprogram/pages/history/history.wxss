@@ -1,0 +1,155 @@
+/**
+ * 历史页 — 样式（含动画增强）
+ */
+
+/* 日期分组 */
+.date-group {
+  margin-bottom: 20rpx;
+}
+
+/* 日期头部 */
+.date-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  transition: background 0.15s;
+  border-left: 4rpx solid transparent;
+}
+
+.date-header-hover {
+  background: #333;
+  border-left-color: #f5a623;
+}
+
+.date-info {
+  flex: 1;
+}
+
+.date-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.date-summary {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.date-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.date-arrow text {
+  font-size: 22rpx;
+  color: #666;
+}
+
+.date-arrow.expanded {
+  transform: rotate(90deg);
+}
+
+/* 记录列表 */
+.records-list {
+  padding-top: 4rpx;
+}
+
+.record-item {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 8rpx;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  border-left: 4rpx solid transparent;
+}
+
+.record-item-hover {
+  transform: translateX(-6rpx);
+  border-left-color: #f5a623;
+  box-shadow: 0 0 16rpx rgba(245, 166, 35, 0.08);
+}
+
+.record-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-left {
+  flex: 1;
+}
+
+.record-action {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 4rpx;
+}
+
+.record-detail {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.record-category {
+  font-size: 20rpx !important;
+  padding: 2rpx 12rpx !important;
+}
+
+.record-right {
+  text-align: right;
+}
+
+.record-1rm {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #f5a623;
+}
+
+.record-1rm-label {
+  font-size: 20rpx;
+  color: #666;
+}
+
+/* 删除按钮 */
+.record-delete {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 120rpx;
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateX(120rpx);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.record-delete text {
+  font-size: 26rpx;
+  color: #fff;
+}
+
+/* 空状态 */
+.empty-hint {
+  display: block;
+  margin-top: 8rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+/* 确认删除按钮 */
+.modal-btns button[style] {
+  color: #fff !important;
+  border: none !important;
+}

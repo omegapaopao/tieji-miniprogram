@@ -1,0 +1,144 @@
+<!--
+  我的 — 个人中心
+  动画: 头像缩放弹入 + 卡牌逐条入场 + 数据数字脉冲
+-->
+<view class="container">
+  <!-- 用户信息区 -->
+  <view wx:if="{{user}}" class="user-header card scale-in">
+    <view class="user-avatar-wrap" bindtap="changeAvatar">
+      <image
+        wx:if="{{avatarUrl}}"
+        class="user-avatar-img"
+        src="{{avatarUrl}}"
+        mode="aspectFill"
+      />
+      <view wx:else class="user-avatar-default">
+        <text class="avatar-default-text">💪</text>
+      </view>
+    </view>
+    <view class="user-info">
+      <text class="user-name">{{user.username}}</text>
+      <text class="user-desc">坚持记录，见证进步</text>
+    </view>
+    <view class="logout-btn btn-press" bindtap="handleLogout" hover-class="logout-btn-hover">
+      <text class="logout-icon">⏻</text>
+    </view>
+  </view>
+
+  <!-- 未登录提示 -->
+  <view wx:else class="user-header card scale-in" bindtap="goToAuth">
+    <view class="user-avatar-default">
+      <text class="avatar-default-text">👤</text>
+    </view>
+    <view class="user-info">
+      <text class="user-name">点击登录 / 注册</text>
+      <text class="user-desc">开启你的训练之旅</text>
+    </view>
+  </view>
+
+  <!-- 动作库管理 -->
+  <view class="card card-enter delay-1">
+    <view class="card-header">
+      <text class="card-title">动作库管理</text>
+      <text class="card-subtitle">{{exercises.length}} 个动作</text>
+    </view>
+
+    <scroll-view class="profile-category-scroll" scroll-x enable-flex>
+      <view
+        wx:for="{{categories}}"
+        wx:key="value"
+        class="profile-category-tag {{activeCategory === item.value ? 'active' : ''}}"
+        data-category="{{item.value}}"
+        bindtap="switchCategory"
+        hover-class="category-tag-hover"
+      >
+        <text>{{item.label}}</text>
+      </view>
+    </scroll-view>
+
+    <view class="exercise-list">
+      <view
+        wx:for="{{filteredExercises}}"
+        wx:key="_id"
+        class="exercise-list-item"
+      >
+        <view class="exercise-list-info">
+          <text class="exercise-list-name">{{item.name}}</text>
+          <text class="tag tag-gold">{{item.category}}</text>
+          <text wx:if="{{item.is_custom}}" class="tag tag-blue">自定义</text>
+        </view>
+        <view
+          wx:if="{{item.is_custom}}"
+          class="exercise-list-delete btn-press"
+          data-id="{{item._id}}"
+          data-name="{{item.name}}"
+          bindtap="deleteExercise"
+          hover-class="delete-btn-hover"
+        >
+          <text>删除</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="add-exercise-btn btn-press" bindtap="showAddForm" hover-class="add-btn-hover">
+      <text class="add-icon">+</text>
+      <text>添加自定义动作</text>
+    </view>
+  </view>
+
+  <!-- 添加动作表单 -->
+  <view wx:if="{{showForm}}" class="card add-form scale-in">
+    <text class="form-title">新建动作</text>
+    <input class="form-input" placeholder="动作名称" placeholder-style="color:#666" value="{{newName}}" bindinput="onNewNameInput" focus="{{showForm}}"/>
+    <view class="form-categories">
+      <view wx:for="{{addCategories}}" wx:key="value" class="form-category {{newCategory === item.value ? 'active' : ''}}" data-category="{{item.value}}" bindtap="selectNewCategory" hover-class="form-cat-hover">
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+    <view class="form-btns">
+      <view class="btn-secondary btn-small btn-press" bindtap="hideAddForm">取消</view>
+      <view class="btn-primary btn-small btn-press" bindtap="confirmAdd">确认添加</view>
+    </view>
+  </view>
+
+  <!-- 数据统计概览 -->
+  <view class="card stats-overview card-enter delay-2">
+    <text class="card-title">训练数据概览</text>
+    <view class="overview-grid">
+      <view class="overview-item">
+        <text class="overview-num number-animate">{{totalRecords}}</text>
+        <text class="overview-label">总记录数</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-num number-animate">{{totalDays}}</text>
+        <text class="overview-label">训练天数</text>
+      </view>
+      <view class="overview-item">
+        <text class="overview-num number-animate">{{totalVolume}}kg</text>
+        <text class="overview-label">累计容量</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 意见反馈 -->
+  <view class="card feedback-card card-enter delay-3" bindtap="openFeedback" hover-class="card-hover">
+    <view class="feedback-card-inner">
+      <view class="feedback-icon-wrap">
+        <text class="feedback-icon">💬</text>
+      </view>
+      <view class="feedback-info">
+        <text class="feedback-title">意见反馈</text>
+        <text class="feedback-desc">告诉我们你的想法，帮助铁记变得更好</text>
+      </view>
+      <text class="feedback-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 关于 -->
+  <view class="card about-section card-enter delay-4">
+    <text class="card-title">关于铁记</text>
+    <text class="about-text">铁记 · 力量训练日志 v1.0.0</text>
+    <text class="about-text">记录每一次力量的增长</text>
+    <text class="about-text about-hint breathe">AI 动作分析功能即将上线，敬请期待</text>
+  </view>
+</view>

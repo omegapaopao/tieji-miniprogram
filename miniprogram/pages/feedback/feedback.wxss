@@ -1,0 +1,161 @@
+/**
+ * 意见反馈页 — 评论区样式
+ */
+
+/* 反馈列表 */
+.feedback-list {
+  padding-bottom: 140rpx;
+}
+
+.feedback-item {
+  display: flex;
+  gap: 20rpx;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.04);
+}
+
+/* 头像 */
+.feedback-avatar {
+  flex-shrink: 0;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3a3a3a, #2a2a2a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.feedback-avatar-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #f5a623;
+}
+
+/* 内容区 */
+.feedback-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.feedback-username {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #ddd;
+}
+
+.feedback-time {
+  font-size: 20rpx;
+  color: #666;
+}
+
+.feedback-content {
+  font-size: 28rpx;
+  color: #ccc;
+  line-height: 1.6;
+  word-break: break-all;
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  margin-bottom: 8rpx;
+  color: #ccc;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: #888;
+}
+
+/* 底部发布栏 */
+.post-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #1e1e1e;
+  padding: 16rpx 24rpx;
+  padding-bottom: calc(16rpx + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  border-top: 1rpx solid #2a2a2a;
+  box-shadow: 0 -4rpx 20rpx rgba(0, 0, 0, 0.3);
+}
+
+.post-input-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.post-input {
+  background: #2a2a2a;
+  border-radius: 24rpx;
+  padding: 16rpx 80rpx 16rpx 24rpx;
+  font-size: 26rpx;
+  color: #fff;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.post-input:focus {
+  border-color: #f5a623;
+}
+
+.post-count {
+  position: absolute;
+  right: 20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18rpx;
+  color: #666;
+}
+
+.post-send-btn {
+  flex-shrink: 0;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.post-send-btn.active {
+  background: linear-gradient(135deg, #f5a623, #f7931e);
+  box-shadow: 0 4rpx 14rpx rgba(245, 166, 35, 0.35);
+}
+
+.post-send-btn.active .post-send-icon {
+  color: #1a1a1a;
+}
+
+.post-send-icon {
+  font-size: 32rpx;
+  color: #666;
+  font-weight: 700;
+  transition: color 0.2s;
+}
