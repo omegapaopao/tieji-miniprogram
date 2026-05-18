@@ -19,6 +19,7 @@ Page({
     quoteAuthor: '',
     todayRecordCount: 0,
     todayVolume: 0,
+    todayVolumeTons: '0',
     todayActions: 0,
     todayMaxWeight: 0,
     todayRecords: [],
@@ -99,18 +100,28 @@ Page({
   },
 
   /**
-   * 加载动作库
+   * 加载动作库（分页拉取全量，绕过客户端 20 条限制）
    */
   async loadExercises() {
     const db = app.getDb();
     if (!db) return;
 
     try {
-      const result = await db.collection('exercise_library')
-        .orderBy('created_at', 'asc')
-        .get();
+      const PAGE = 20;
+      let all = [];
+      let skip = 0;
+      while (true) {
+        const batch = await db.collection('exercise_library')
+          .orderBy('created_at', 'asc')
+          .skip(skip)
+          .limit(PAGE)
+          .get();
+        all = all.concat(batch.data);
+        if (batch.data.length < PAGE) break;
+        skip += PAGE;
+      }
 
-      this.setData({ exercises: result.data });
+      this.setData({ exercises: all });
     } catch (err) {
       console.error('[训练页] 加载动作库失败:', err);
     }
@@ -145,6 +156,7 @@ Page({
         todayRecords: records,
         todayRecordCount: records.length,
         todayVolume: Math.round(todayVolume),
+        todayVolumeTons: (todayVolume / 1000).toFixed(1),
         todayActions: actionNames.size,
         todayMaxWeight: maxWeight,
         loading: false

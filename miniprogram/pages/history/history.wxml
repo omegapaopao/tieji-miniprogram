@@ -27,7 +27,7 @@
     >
       <view class="date-info">
         <text class="date-title">{{item.dateCN}}</text>
-        <text class="date-summary">{{item.records.length}} 个动作 · {{item.totalVolume}}kg</text>
+        <text class="date-summary">{{item.records.length}} 个动作 · {{item.totalVolumeTons}}吨</text>
       </view>
       <view class="date-arrow {{item.expanded ? 'expanded' : ''}}">
         <text>▶</text>

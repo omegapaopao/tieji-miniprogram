@@ -1,14 +1,11 @@
 /**
  * 动作选择器组件
- *
- * 功能:
- *   1. 按分类（全部/胸/背/腿/肩/臂）筛选动作
- *   2. 横向滚动展示动作卡片
- *   3. "自定义"入口触发添加事件
+ * 分类筛选 + 横向滚动 + 长按查看动作指导
  */
+const exerciseData = require('../../utils/exercise_data.js');
+
 Component({
   properties: {
-    // 动作列表（从父页面传入）
     exercises: {
       type: Array,
       value: []
@@ -25,7 +22,10 @@ Component({
       { label: '臂', value: '臂' }
     ],
     activeCategory: 'all',
-    filteredExercises: []
+    filteredExercises: [],
+
+    showGuide: false,
+    guideExercise: {}
   },
 
   observers: {
@@ -41,43 +41,53 @@ Component({
   },
 
   methods: {
-    /**
-     * 切换分类
-     */
     switchCategory(e) {
       const category = e.currentTarget.dataset.category;
       this.setData({ activeCategory: category });
       this.filterExercises(this.properties.exercises, category);
     },
 
-    /**
-     * 按分类筛选动作
-     */
     filterExercises(exercises, category) {
       if (!exercises || exercises.length === 0) {
         this.setData({ filteredExercises: [] });
         return;
       }
+      let list = category === 'all' ? exercises : exercises.filter(e => e.category === category);
+      // 从本地数据表补充细分肌群
+      list = list.map(e => ({
+        ...e,
+        target: e.target || exerciseData.getTarget(e.name) || ''
+      }));
       if (category === 'all') {
-        this.setData({ filteredExercises: exercises });
+        this.setData({ filteredExercises: list });
       } else {
-        this.setData({
-          filteredExercises: exercises.filter(e => e.category === category)
-        });
+        this.setData({ filteredExercises: list });
       }
     },
 
-    /**
-     * 选择动作 — 触发父页面事件
-     */
     onSelectExercise(e) {
       const exercise = e.currentTarget.dataset.exercise;
       this.triggerEvent('select', { exercise });
     },
 
     /**
-     * 添加自定义动作 — 触发父页面事件
+     * 长按动作 — 弹出动作指导（优先本地查表）
      */
+    onLongPressExercise(e) {
+      const exercise = e.currentTarget.dataset.exercise;
+      const guide = exerciseData.getGuide(exercise.name) || exercise.guide || '暂无动作指导';
+      const target = exerciseData.getTarget(exercise.name) || exercise.target || '';
+      this.setData({
+        showGuide: true,
+        guideExercise: { ...exercise, displayGuide: guide, displayTarget: target }
+      });
+      wx.vibrateShort({ type: 'light', fail: () => {} });
+    },
+
+    closeGuide() {
+      this.setData({ showGuide: false });
+    },
+
     onAddCustom() {
       this.triggerEvent('addcustom');
     }

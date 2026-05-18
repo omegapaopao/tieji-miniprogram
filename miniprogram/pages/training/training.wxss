@@ -144,26 +144,79 @@
   opacity: 0.8;
 }
 
-/* 今日总览卡片 */
+/* 今日概览卡片 */
 .today-summary {
   margin-bottom: 30rpx;
   border: 1rpx solid rgba(245, 166, 35, 0.08);
 }
 
-.summary-row {
+.summary-header {
+  display: block;
+  font-size: 22rpx;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+  margin-bottom: 16rpx;
+}
+
+/* 主数据 — 总容量 */
+.summary-main {
+  text-align: center;
+  padding: 20rpx 0 24rpx;
+  border-bottom: 1rpx solid #2a2a2a;
+  margin-bottom: 20rpx;
+}
+
+.summary-big-num {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #f5a623;
+  line-height: 1;
+}
+
+.summary-big-unit {
+  font-size: 28rpx;
+  color: #f5a623;
+  margin-left: 4rpx;
+  font-weight: 500;
+}
+
+.summary-big-label {
+  display: block;
+  font-size: 24rpx;
+  color: #888;
+  margin-top: 8rpx;
+}
+
+/* 副指标行 */
+.summary-sub-row {
   display: flex;
   align-items: center;
 }
 
-.summary-item {
+.summary-sub-item {
   flex: 1;
   text-align: center;
 }
 
-.summary-divider {
+.summary-sub-num {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #fff;
+}
+
+.summary-sub-label {
+  display: block;
+  font-size: 22rpx;
+  color: #888;
+  margin-top: 4rpx;
+}
+
+.summary-sub-divider {
   width: 1rpx;
-  height: 60rpx;
-  background: linear-gradient(180deg, transparent, #3a3a3a, transparent);
+  height: 40rpx;
+  background: #333;
 }
 
 /* 空状态 */
@@ -202,11 +255,19 @@
   display: block;
   font-size: 28rpx;
   font-weight: 600;
-  margin-bottom: 16rpx;
+  margin-bottom: 6rpx;
   color: #ccc;
   padding-left: 4rpx;
   border-left: 6rpx solid #f5a623;
   padding: 4rpx 0 4rpx 16rpx;
+}
+
+.section-hint {
+  display: block;
+  font-size: 22rpx;
+  color: #555;
+  margin-bottom: 16rpx;
+  padding-left: 26rpx;
 }
 
 .record-card {

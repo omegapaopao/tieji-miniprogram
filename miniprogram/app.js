@@ -3,12 +3,12 @@
  * 全局入口：初始化云开发 + 全局数据共享
  */
 const env = require('./env.js');
+const exerciseData = require('./utils/exercise_data.js');
 
 App({
   onLaunch() {
     console.log('[铁记] 小程序启动');
 
-    // 初始化微信云开发
     if (wx.cloud) {
       wx.cloud.init({
         env: env.cloudEnvId,
@@ -19,17 +19,19 @@ App({
       console.warn('[铁记] 当前版本不支持云开发，请使用 2.2.3 以上基础库');
     }
 
-    // 初始化预置动作库（首次使用时写入云数据库）
     this.initPresetExercises();
-
-    // 自动登录检测
     this.checkAutoLogin();
   },
 
-  /**
-   * 自动登录检测
-   * 本地存储有用户数据 → 去数据库验证该用户名仍存在 → 恢复登录态
-   */
+  globalData: {
+    cloudEnvId: env.cloudEnvId,
+    user: null,
+    isAuthChecked: false,
+    exercises: [],
+    todayRecords: [],
+    currentDate: ''
+  },
+
   async checkAutoLogin() {
     const storedUser = wx.getStorageSync('user');
 
@@ -53,87 +55,97 @@ App({
         } else {
           wx.removeStorageSync('user');
           this.globalData.user = null;
-          console.log('[铁记] 用户数据不存在，需重新登录');
         }
       } catch (err) {
         console.error('[铁记] 自动登录检查失败:', err);
-        // 网络异常时保留本地数据，允许离线使用
         this.globalData.user = storedUser;
       }
-    } else {
-      console.log('[铁记] 未登录，请先注册或登录');
     }
 
     this.globalData.isAuthChecked = true;
   },
 
   /**
-   * 全局共享数据
+   * 分页拉取全部动作（客户端 get 硬限制 20 条/次）
    */
-  globalData: {
-    cloudEnvId: env.cloudEnvId,
-    user: null,             // 当前登录用户信息
-    isAuthChecked: false,   // 是否已完成登录检查
-    exercises: [],          // 动作库缓存
-    todayRecords: [],       // 今日训练记录缓存
-    currentDate: ''         // 当前选中日期
+  async fetchAllExercises() {
+    const db = this.getDb();
+    if (!db) return [];
+
+    const PAGE = 20;
+    let all = [];
+    let skip = 0;
+    while (true) {
+      const batch = await db.collection('exercise_library')
+        .orderBy('created_at', 'asc')
+        .skip(skip)
+        .limit(PAGE)
+        .get();
+      all = all.concat(batch.data);
+      if (batch.data.length < PAGE) break;
+      skip += PAGE;
+    }
+    return all;
   },
 
   /**
-   * 首次使用时初始化预置动作库到云数据库
-   * 仅在用户动作库为空时写入
+   * 初始化预置动作库 — 分页比对 + 去重 + 补全
    */
   async initPresetExercises() {
     if (!wx.cloud) return;
 
     const db = wx.cloud.database();
+    const presetNames = exerciseData.presetExercises.map(e => e.name);
 
     try {
-      // 检查是否已有数据（直接查总数，不依赖 _openid 条件）
-      const existing = await db.collection('exercise_library').count();
+      // 分页拉取全量动作
+      const all = await this.fetchAllExercises();
 
-      if (existing.total > 0) {
-        console.log('[铁记] 动作库已存在, 共', existing.total, '个动作');
+      const nonCustom = all.filter(e => e.is_custom !== true);
+      const custom = all.filter(e => e.is_custom === true);
+
+      // 检测重复（错误迁移可能造成同名旧记录残留）
+      const nameCounts = {};
+      for (const item of nonCustom) {
+        nameCounts[item.name] = (nameCounts[item.name] || 0) + 1;
+      }
+      const hasDuplicates = Object.values(nameCounts).some(c => c > 1);
+      const existingPresetNames = new Set(Object.keys(nameCounts));
+      const missing = presetNames.filter(n => !existingPresetNames.has(n));
+
+      if (!hasDuplicates && missing.length === 0) {
+        console.log('[铁记] 动作库已完整, 预置', existingPresetNames.size, '个 + 自定义', custom.length, '个');
         return;
       }
 
-      // 写入预置动作
-      const now = Date.now();
-      const presetExercises = [
-        // 胸
-        { name: '卧推', category: '胸', is_custom: false, created_at: now },
-        { name: '哑铃飞鸟', category: '胸', is_custom: false, created_at: now },
-        { name: '上斜卧推', category: '胸', is_custom: false, created_at: now },
-        // 背
-        { name: '引体向上', category: '背', is_custom: false, created_at: now },
-        { name: '杠铃划船', category: '背', is_custom: false, created_at: now },
-        { name: '高位下拉', category: '背', is_custom: false, created_at: now },
-        // 腿
-        { name: '深蹲', category: '腿', is_custom: false, created_at: now },
-        { name: '硬拉', category: '腿', is_custom: false, created_at: now },
-        { name: '腿举', category: '腿', is_custom: false, created_at: now },
-        // 肩
-        { name: '推举', category: '肩', is_custom: false, created_at: now },
-        { name: '侧平举', category: '肩', is_custom: false, created_at: now },
-        { name: '面拉', category: '肩', is_custom: false, created_at: now },
-        // 臂
-        { name: '杠铃弯举', category: '臂', is_custom: false, created_at: now },
-        { name: '三头下压', category: '臂', is_custom: false, created_at: now }
-      ];
-
-      for (const exercise of presetExercises) {
-        await db.collection('exercise_library').add({ data: exercise });
+      // 有重复：先删全部非自定义动作再重建；否则只补缺
+      if (hasDuplicates) {
+        console.log('[铁记] 清理', nonCustom.length, '条非自定义动作...');
+        for (const item of nonCustom) {
+          await db.collection('exercise_library').doc(item._id).remove();
+        }
       }
 
-      console.log('[铁记] 预置动作库初始化完成, 共', presetExercises.length, '个动作');
+      const toAdd = hasDuplicates ? exerciseData.presetExercises : missing;
+      const now = Date.now();
+      for (const exercise of toAdd) {
+        await db.collection('exercise_library').add({
+          data: {
+            name: exercise.name,
+            category: exercise.category,
+            target: exercise.target || '',
+            is_custom: false,
+            created_at: now
+          }
+        });
+      }
+
+      console.log('[铁记] 动作库同步完成, 新增', toAdd.length, '个');
     } catch (err) {
       console.error('[铁记] 动作库初始化失败:', err);
     }
   },
 
-  /**
-   * 获取云数据库实例
-   */
   getDb() {
     return wx.cloud ? wx.cloud.database() : null;
   }

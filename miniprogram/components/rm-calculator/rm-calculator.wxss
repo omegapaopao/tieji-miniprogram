@@ -1,0 +1,212 @@
+/* RM 换算器 */
+.rm-calc {
+  margin-top: 20rpx;
+}
+
+.rm-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 700;
+  margin-bottom: 6rpx;
+}
+
+.rm-desc {
+  display: block;
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 24rpx;
+}
+
+/* 输入区 */
+.rm-input-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12rpx;
+}
+
+.rm-input-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.rm-input-label {
+  display: block;
+  font-size: 22rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.rm-input {
+  background: #1a1a1a;
+  border: 2rpx solid #333;
+  border-radius: 12rpx;
+  height: 72rpx;
+  padding: 0 16rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.rm-input:focus {
+  border-color: #f5a623;
+}
+
+.rm-placeholder {
+  color: #555;
+  font-weight: 400;
+}
+
+.rm-times {
+  font-size: 32rpx;
+  color: #666;
+  padding-bottom: 12rpx;
+  flex-shrink: 0;
+}
+
+.rm-btn {
+  flex-shrink: 0;
+  background: #333;
+  color: #666;
+  font-size: 28rpx;
+  padding: 0 28rpx;
+  height: 72rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.rm-btn-active {
+  background: rgba(245, 166, 35, 0.2);
+  color: #f5a623;
+  font-weight: 600;
+}
+
+/* 结果区 */
+.rm-result {
+  margin-top: 28rpx;
+}
+
+.rm-one-rm {
+  text-align: center;
+  padding: 24rpx;
+  background: rgba(245, 166, 35, 0.08);
+  border-radius: 16rpx;
+  border: 2rpx solid rgba(245, 166, 35, 0.15);
+  margin-bottom: 24rpx;
+}
+
+.rm-one-label {
+  display: block;
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.rm-one-value {
+  font-size: 56rpx;
+  font-weight: 700;
+  color: #f5a623;
+}
+
+.rm-one-unit {
+  font-size: 28rpx;
+  color: #f5a623;
+  margin-left: 4rpx;
+}
+
+/* 对照表 */
+.rm-table {
+  background: #1a1a1a;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+
+.rm-table-header {
+  display: flex;
+  padding: 16rpx 20rpx;
+  border-bottom: 1rpx solid #333;
+}
+
+.rm-th {
+  font-size: 22rpx;
+  color: #666;
+  font-weight: 600;
+}
+
+.rm-th-rm { width: 80rpx; }
+.rm-th-wt { flex: 1; }
+.rm-th-pct { width: 180rpx; }
+
+.rm-tr {
+  display: flex;
+  align-items: center;
+  padding: 14rpx 20rpx;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.04);
+}
+
+.rm-tr:last-child {
+  border-bottom: none;
+}
+
+.rm-tr-highlight {
+  background: rgba(245, 166, 35, 0.06);
+}
+
+.rm-td {
+  font-size: 26rpx;
+  color: #ccc;
+}
+
+.rm-td-rm {
+  width: 80rpx;
+  font-weight: 600;
+  color: #f5a623;
+}
+
+.rm-td-wt {
+  flex: 1;
+  font-weight: 600;
+  color: #fff;
+}
+
+.rm-td-pct {
+  width: 180rpx;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.rm-pct-bar {
+  height: 8rpx;
+  background: linear-gradient(90deg, rgba(245, 166, 35, 0.3), #f5a623);
+  border-radius: 4rpx;
+  min-width: 8rpx;
+  transition: width 0.4s ease;
+}
+
+.rm-pct-text {
+  font-size: 22rpx;
+  color: #999;
+  margin-left: 8rpx;
+  flex-shrink: 0;
+}
+
+/* 重新计算 */
+.rm-reset {
+  text-align: center;
+  margin-top: 20rpx;
+  padding: 14rpx;
+  font-size: 24rpx;
+  color: #666;
+  border-radius: 12rpx;
+  background: #2a2a2a;
+  transition: color 0.2s;
+}
+
+.rm-reset:active {
+  color: #f5a623;
+}

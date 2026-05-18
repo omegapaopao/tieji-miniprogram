@@ -1,6 +1,6 @@
 <!--
   动作选择器组件
-  动画: 标签切换过渡 + 卡片hover缩放 + 自定义按钮旋转
+  动画: 标签切换过渡 + 卡片hover缩放
 -->
 <view class="exercise-picker">
   <!-- 分类筛选 -->
@@ -31,11 +31,28 @@
       class="exercise-item"
       data-exercise="{{item}}"
       bindtap="onSelectExercise"
+      bindlongpress="onLongPressExercise"
       hover-class="exercise-item-hover"
     >
       <view class="exercise-icon">💪</view>
       <text class="exercise-name">{{item.name}}</text>
+      <text class="exercise-target" wx:if="{{item.target}}">{{item.target}}</text>
       <text class="exercise-category">{{item.category}}</text>
     </view>
   </scroll-view>
+
+  <!-- 动作指导弹窗 -->
+  <view wx:if="{{showGuide}}" class="modal-mask" bindtap="closeGuide">
+    <view class="modal-box guide-modal scale-in" catchtap="">
+      <text class="guide-modal-title">{{guideExercise.name}}</text>
+      <view class="guide-modal-tags">
+        <text class="tag tag-gold">{{guideExercise.category}}</text>
+        <text wx:if="{{guideExercise.displayTarget}}" class="tag tag-blue">{{guideExercise.displayTarget}}</text>
+      </view>
+      <text class="guide-modal-text">{{guideExercise.displayGuide || '暂无动作指导'}}</text>
+      <view class="modal-btns" style="margin-top:24rpx">
+        <button class="btn-primary btn-small btn-press" bindtap="closeGuide">知道了</button>
+      </view>
+    </view>
+  </view>
 </view>

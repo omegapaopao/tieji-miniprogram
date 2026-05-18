@@ -1,0 +1,9 @@
+.line-chart-wrap {
+  width: 100%;
+  height: 360rpx;
+  position: relative;
+}
+.chart-canvas {
+  width: 100%;
+  height: 100%;
+}

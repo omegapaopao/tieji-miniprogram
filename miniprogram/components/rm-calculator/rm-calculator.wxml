@@ -1,0 +1,70 @@
+<view class="rm-calc card">
+  <text class="rm-title">RM 换算器</text>
+  <text class="rm-desc">输入做组重量和次数，查看 1RM 到 12RM 对应重量</text>
+
+  <!-- 输入区 -->
+  <view class="rm-input-row">
+    <view class="rm-input-group">
+      <text class="rm-input-label">重量 (kg)</text>
+      <input
+        class="rm-input"
+        type="digit"
+        maxlength="6"
+        placeholder="例: 80"
+        placeholder-class="rm-placeholder"
+        value="{{weight}}"
+        bindinput="onWeightInput"
+      />
+    </view>
+    <text class="rm-times">×</text>
+    <view class="rm-input-group">
+      <text class="rm-input-label">次数</text>
+      <input
+        class="rm-input"
+        type="number"
+        maxlength="2"
+        placeholder="1-30"
+        placeholder-class="rm-placeholder"
+        value="{{reps}}"
+        bindinput="onRepsInput"
+      />
+    </view>
+    <view class="rm-btn {{weight && reps ? 'rm-btn-active' : ''}}" bindtap="calculate">
+      <text>计算</text>
+    </view>
+  </view>
+
+  <!-- 结果区 -->
+  <view wx:if="{{hasResult}}" class="rm-result fade-in">
+    <view class="rm-one-rm">
+      <text class="rm-one-label">估算 1RM</text>
+      <text class="rm-one-value">{{oneRM}}</text>
+      <text class="rm-one-unit">kg</text>
+    </view>
+
+    <!-- 对照表 -->
+    <view class="rm-table">
+      <view class="rm-table-header">
+        <text class="rm-th rm-th-rm">RM</text>
+        <text class="rm-th rm-th-wt">重量 (kg)</text>
+        <text class="rm-th rm-th-pct">占比</text>
+      </view>
+      <view
+        wx:for="{{table}}"
+        wx:key="rm"
+        class="rm-tr {{item.rm === '1RM' ? 'rm-tr-highlight' : ''}}"
+      >
+        <text class="rm-td rm-td-rm">{{item.rm}}</text>
+        <text class="rm-td rm-td-wt">{{item.weight}}</text>
+        <view class="rm-td rm-td-pct">
+          <view class="rm-pct-bar" style="width: {{item.percent}}%"></view>
+          <text class="rm-pct-text">{{item.percent}}%</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="rm-reset btn-press" bindtap="reset">
+      <text>重新计算</text>
+    </view>
+  </view>
+</view>

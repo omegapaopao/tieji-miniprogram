@@ -1,0 +1,10 @@
+<!-- 原生 Canvas 折线图组件 -->
+<view class="line-chart-wrap">
+  <canvas
+    type="2d"
+    id="chartCanvas"
+    class="chart-canvas"
+    width="{{canvasWidth}}"
+    height="{{canvasHeight}}"
+  ></canvas>
+</view>

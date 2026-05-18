@@ -96,7 +96,16 @@
   font-size: 26rpx;
   color: #fff;
   margin-bottom: 4rpx;
-  max-width: 120rpx;
+  max-width: 140rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.exercise-target {
+  font-size: 20rpx;
+  color: #f5a623;
+  margin-bottom: 2rpx;
+  max-width: 130rpx;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -104,4 +113,30 @@
 .exercise-category {
   font-size: 20rpx;
   color: #666;
+}
+
+/* 动作指导弹窗 */
+.guide-modal {
+  width: 580rpx;
+}
+
+.guide-modal-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-bottom: 12rpx;
+}
+
+.guide-modal-tags {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 16rpx;
+}
+
+.guide-modal-text {
+  display: block;
+  font-size: 28rpx;
+  color: #bbb;
+  line-height: 1.8;
+  text-align: justify;
 }

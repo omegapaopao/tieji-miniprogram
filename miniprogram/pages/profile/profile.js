@@ -42,6 +42,7 @@ Page({
     totalRecords: 0,
     totalDays: 0,
     totalVolume: 0,
+    totalVolumeTons: '0',
 
     // 意见反馈
     showFeedback: false,
@@ -158,18 +159,28 @@ Page({
   },
 
   /**
-   * 加载动作库
+   * 加载动作库（分页拉取全量，绕过客户端 20 条限制）
    */
   async loadExercises() {
     const db = app.getDb();
     if (!db) return;
 
     try {
-      const result = await db.collection('exercise_library')
-        .orderBy('created_at', 'asc')
-        .get();
+      const PAGE = 20;
+      let all = [];
+      let skip = 0;
+      while (true) {
+        const batch = await db.collection('exercise_library')
+          .orderBy('created_at', 'asc')
+          .skip(skip)
+          .limit(PAGE)
+          .get();
+        all = all.concat(batch.data);
+        if (batch.data.length < PAGE) break;
+        skip += PAGE;
+      }
 
-      this.setData({ exercises: result.data });
+      this.setData({ exercises: all });
       this.filterExercises();
     } catch (err) {
       console.error('[我的] 加载动作库失败:', err);
@@ -196,7 +207,8 @@ Page({
       this.setData({
         totalRecords: records.length,
         totalDays: dates.size,
-        totalVolume: Math.round(totalVolume)
+        totalVolume: Math.round(totalVolume),
+        totalVolumeTons: (totalVolume / 1000).toFixed(1)
       });
     } catch (err) {
       console.error('[我的] 加载概览失败:', err);

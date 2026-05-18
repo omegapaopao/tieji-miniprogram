@@ -114,7 +114,7 @@
         <text class="overview-label">训练天数</text>
       </view>
       <view class="overview-item">
-        <text class="overview-num number-animate">{{totalVolume}}kg</text>
+        <text class="overview-num number-animate">{{totalVolumeTons}}吨</text>
         <text class="overview-label">累计容量</text>
       </view>
     </view>

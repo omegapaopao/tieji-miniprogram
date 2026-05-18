@@ -40,22 +40,23 @@
     </scroll-view>
   </block>
 
-  <!-- 今日总容量卡片 -->
+  <!-- 今日训练概览 -->
   <view wx:if="{{!loading && todayRecordCount > 0}}" class="card today-summary card-enter">
-    <view class="summary-row">
-      <view class="summary-item">
-        <text class="data-highlight number-animate">{{todayVolume}}kg</text>
-        <text class="data-label">今日总容量</text>
+    <text class="summary-header">今日训练</text>
+    <view class="summary-main">
+      <text class="summary-big-num number-animate">{{todayVolumeTons}}</text>
+      <text class="summary-big-unit">吨</text>
+      <text class="summary-big-label">总容量</text>
+    </view>
+    <view class="summary-sub-row">
+      <view class="summary-sub-item">
+        <text class="summary-sub-num">{{todayActions}}</text>
+        <text class="summary-sub-label">个动作</text>
       </view>
-      <view class="summary-divider"></view>
-      <view class="summary-item">
-        <text class="data-highlight number-animate">{{todayActions}}</text>
-        <text class="data-label">动作数</text>
-      </view>
-      <view class="summary-divider"></view>
-      <view class="summary-item">
-        <text class="data-highlight number-animate">{{todayMaxWeight}}kg</text>
-        <text class="data-label">最大重量</text>
+      <view class="summary-sub-divider"></view>
+      <view class="summary-sub-item">
+        <text class="summary-sub-num">{{todayMaxWeight}}</text>
+        <text class="summary-sub-label">kg 最大重量</text>
       </view>
     </view>
   </view>
@@ -91,9 +92,13 @@
     </view>
   </view>
 
+  <!-- RM 换算器 -->
+  <rm-calculator />
+
   <!-- 动作选择区域 -->
   <view class="action-picker-section fade-in">
     <text class="section-title">选择训练动作</text>
+    <text class="section-hint">长按动作可查看指导</text>
     <exercise-picker
       exercises="{{exercises}}"
       bind:select="onSelectExercise"

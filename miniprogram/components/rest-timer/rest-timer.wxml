@@ -17,7 +17,7 @@
         <text class="time-value">{{item.label}}</text>
       </view>
     </view>
-    <view class="timer-start-btn" bindtap="startTimer">
+    <view class="timer-start-btn btn-press" bindtap="startTimer">
       <text class="start-icon">▶</text>
       <text>开始休息</text>
     </view>
@@ -28,8 +28,10 @@
     <view class="circle-progress">
       <canvas
         class="progress-canvas"
-        canvas-id="timerCanvas"
+        type="2d"
         id="timerCanvas"
+        width="{{canvasWidth}}"
+        height="{{canvasHeight}}"
       ></canvas>
       <view class="circle-center">
         <text class="countdown-text">{{displayTime}}</text>
@@ -37,7 +39,7 @@
       </view>
     </view>
     <view class="timer-actions">
-      <view class="timer-btn cancel" bindtap="cancelTimer">
+      <view class="timer-btn cancel btn-press" bindtap="cancelTimer">
         <text>✕ 跳过</text>
       </view>
     </view>
@@ -48,7 +50,7 @@
     <view class="done-icon">✓</view>
     <text class="done-text">休息完毕</text>
     <text class="done-sub">可以开始下一组训练</text>
-    <view class="timer-btn restart" bindtap="startTimer">
+    <view class="timer-btn restart btn-press" bindtap="startTimer">
       <text>再来一组</text>
     </view>
   </view>

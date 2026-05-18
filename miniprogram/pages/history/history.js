@@ -162,7 +162,8 @@ Page({
     return Object.values(dateMap).map(group => ({
       ...group,
       expanded: existingMap[group.date] !== undefined ? existingMap[group.date] : true,
-      totalVolume: Math.round(group.totalVolume)
+      totalVolume: Math.round(group.totalVolume),
+      totalVolumeTons: (group.totalVolume / 1000).toFixed(1)
     }));
   },
 
@@ -176,6 +177,7 @@ Page({
       if (map[g.date]) {
         map[g.date].records.push(...g.records);
         map[g.date].totalVolume += g.totalVolume;
+        map[g.date].totalVolumeTons = (map[g.date].totalVolume / 1000).toFixed(1);
       } else {
         map[g.date] = g;
       }

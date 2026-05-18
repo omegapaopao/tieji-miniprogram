@@ -89,17 +89,16 @@
   transition: color 0.2s;
 }
 
-.day-dot {
-  width: 8rpx;
-  height: 8rpx;
-  border-radius: 50%;
-  background: #f5a623;
-  margin-top: 2rpx;
-  transition: transform 0.3s ease;
-}
-
-.day-cell:not(.empty):active .day-dot {
-  transform: scale(1.5);
+.day-cats {
+  font-size: 16rpx;
+  color: #fff;
+  font-weight: 500;
+  margin-top: 1rpx;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.1;
 }
 
 /* 热力等级 — 4 级深浅 */
