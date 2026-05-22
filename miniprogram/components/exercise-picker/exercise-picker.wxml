@@ -39,6 +39,11 @@
       <text class="exercise-target" wx:if="{{item.target}}">{{item.target}}</text>
       <text class="exercise-category">{{item.category}}</text>
     </view>
+
+    <!-- 空状态提示 -->
+    <view wx:if="{{filteredExercises.length === 0}}" class="exercise-empty">
+      <text>暂无动作，点击「+ 自定义」添加</text>
+    </view>
   </scroll-view>
 
   <!-- 动作指导弹窗 -->

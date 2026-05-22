@@ -52,8 +52,9 @@ Component({
         this.setData({ filteredExercises: [] });
         return;
       }
-      let list = category === 'all' ? exercises : exercises.filter(e => e.category === category);
-      // 从本地数据表补充细分肌群
+      // 过滤掉 DB 中缺少 name 的无效记录，再用本地数据补全 target
+      let list = exercises.filter(e => e.name);
+      list = category === 'all' ? list : list.filter(e => e.category === category);
       list = list.map(e => ({
         ...e,
         target: e.target || exerciseData.getTarget(e.name) || ''

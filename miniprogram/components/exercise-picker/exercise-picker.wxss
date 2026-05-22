@@ -140,3 +140,19 @@
   line-height: 1.8;
   text-align: justify;
 }
+
+/* 空状态 */
+.exercise-empty {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 40rpx;
+  background: #2a2a2a;
+  border-radius: 16rpx;
+  border: 2rpx dashed #444;
+}
+
+.exercise-empty text {
+  font-size: 24rpx;
+  color: #666;
+}

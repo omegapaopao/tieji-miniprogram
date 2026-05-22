@@ -101,10 +101,14 @@ Page({
 
   /**
    * 加载动作库（分页拉取全量，绕过客户端 20 条限制）
+   * 首次加载等待初始化完成，若 DB 为空则用本地数据兜底
    */
   async loadExercises() {
     const db = app.getDb();
     if (!db) return;
+
+    // 等待 app.js 中的 initPresetExercises 完成
+    await app.waitForExercisesReady();
 
     try {
       const PAGE = 20;
@@ -121,9 +125,22 @@ Page({
         skip += PAGE;
       }
 
+      // 兜底：DB 为空可能意味着权限问题或初始化失败，用本地数据渲染
+      if (all.length === 0) {
+        console.warn('[训练页] 动作库为空，使用本地预置数据兜底');
+        const exerciseData = require('../../utils/exercise_data.js');
+        const fallback = exerciseData.presetExercises.map((e, i) => ({ ...e, _id: 'local_' + i }));
+        this.setData({ exercises: fallback });
+        return;
+      }
+
       this.setData({ exercises: all });
     } catch (err) {
       console.error('[训练页] 加载动作库失败:', err);
+      // 出错时也用本地数据兜底
+      const exerciseData = require('../../utils/exercise_data.js');
+      const fallback = exerciseData.presetExercises.map((e, i) => ({ ...e, _id: 'local_' + i }));
+      this.setData({ exercises: fallback });
     }
   },
 

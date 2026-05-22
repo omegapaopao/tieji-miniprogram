@@ -19,7 +19,11 @@ App({
       console.warn('[铁记] 当前版本不支持云开发，请使用 2.2.3 以上基础库');
     }
 
-    this.initPresetExercises();
+    // 动作库初始化是异步的，保存 promise 供页面等待
+    this.globalData._exercisesInitPromise = this.initPresetExercises();
+    this.globalData._exercisesInitPromise.then(() => {
+      this.globalData.exercisesReady = true;
+    });
     this.checkAutoLogin();
   },
 
@@ -29,7 +33,9 @@ App({
     isAuthChecked: false,
     exercises: [],
     todayRecords: [],
-    currentDate: ''
+    currentDate: '',
+    exercisesReady: false,
+    _exercisesInitPromise: null
   },
 
   async checkAutoLogin() {
@@ -143,6 +149,16 @@ App({
       console.log('[铁记] 动作库同步完成, 新增', toAdd.length, '个');
     } catch (err) {
       console.error('[铁记] 动作库初始化失败:', err);
+    }
+  },
+
+  /**
+   * 等待动作库初始化完成（页面在 loadExercises 前调用）
+   */
+  async waitForExercisesReady() {
+    if (this.globalData.exercisesReady) return;
+    if (this.globalData._exercisesInitPromise) {
+      await this.globalData._exercisesInitPromise;
     }
   },
 
